@@ -1,11 +1,13 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { UserRoles } from "../utils/UserRoles";
 import bcrypt from "bcrypt";
+
 export interface IUser extends Document {
     name: string;
     email: string;
     password: string;
     role: UserRoles;
+    matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>(

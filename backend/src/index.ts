@@ -3,11 +3,19 @@ import dotenv from "dotenv";
 import { connectDB } from "./config/db";
 import { User } from "./models/User";
 import { index } from "./routes/index";
+import cors from "cors";
+
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 connectDB();
+app.use(
+    cors({
+        origin: process.env.FRONTEND_URL,
+        credentials: true,
+    })
+);
 
 // Middleware to parse JSON requests
 app.use(express.json());

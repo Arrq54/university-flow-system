@@ -1,0 +1,24 @@
+.content-header{
+    margin-bottom: 10px;
+}
+.content-header.small {
+    font-size: 12px;
+}
+.content-header.medium {
+    font-size: 16px;
+}
+.content-header.large {
+    font-size: 25px;
+}
+.content-header.xLarge {
+    font-size: 30px;
+}
+.left{
+    text-align: left;
+}
+.center{
+    text-align: center;
+}
+.right{
+    text-align: right;
+}
