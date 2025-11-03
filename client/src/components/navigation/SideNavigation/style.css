@@ -1,0 +1,34 @@
+.side-navigation {
+    width: 120px;
+    height: 100vh;
+    background: linear-gradient(180deg, 
+        var(--sidebar-background) 0%, 
+        rgba(46, 52, 64, 0.95) 100%
+    );
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 12px;
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    border-right: 1px solid rgba(248, 249, 250, 0.08);
+    backdrop-filter: blur(10px);
+    z-index: 100;
+}
+
+.side-navigation::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(180deg, 
+        transparent 0%, 
+        rgba(248, 249, 250, 0.1) 20%, 
+        rgba(248, 249, 250, 0.1) 80%, 
+        transparent 100%
+    );
+}

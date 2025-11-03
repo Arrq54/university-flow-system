@@ -1,0 +1,84 @@
+.side-navigation-item {
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--light-components-primary);
+    cursor: pointer;
+    margin: 8px 0;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    min-height: 80px;
+    border: 2px solid transparent;
+}
+
+.side-navigation-item:hover {
+    background-color: rgba(248, 249, 250, 0.08);
+    border-color: rgba(248, 249, 250, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.side-navigation-item.active {
+    background-color: rgba(248, 249, 250, 0.15);
+    border-color: var(--light-components-primary);
+    box-shadow: 0 4px 20px rgba(248, 249, 250, 0.1);
+}
+
+.side-navigation-item.active:hover {
+    background-color: rgba(248, 249, 250, 0.2);
+    transform: translateY(-1px);
+}
+
+.side-navigation-item > .icon {
+    width: 32px;
+    height: 32px;
+    filter: var(--white-filter);
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+}
+
+.side-navigation-item:hover > .icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    transform: scale(1.1);
+}
+
+.side-navigation-item.active > .icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7500%) hue-rotate(0deg) brightness(100%) contrast(100%);
+    transform: scale(1.05);
+}
+
+.side-navigation-item-label {
+    font-size: 12px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    font-family: 'Inter', sans-serif;
+}
+
+.side-navigation-item:hover .side-navigation-item-label {
+    opacity: 1;
+}
+
+.side-navigation-item.active .side-navigation-item-label {
+    opacity: 1;
+    font-weight: 600;
+}
+
+/* Subtle glow effect for active item */
+.side-navigation-item.active::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 12px;
+    background: linear-gradient(45deg, 
+        rgba(248, 249, 250, 0.1), 
+        rgba(248, 249, 250, 0.05), 
+        rgba(248, 249, 250, 0.1)
+    );
+    z-index: -1;
+}
