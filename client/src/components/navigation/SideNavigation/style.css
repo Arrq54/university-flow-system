@@ -1,5 +1,5 @@
 .side-navigation {
-    width: 120px;
+    width: var(--sidebar-width);
     height: 100vh;
     background: linear-gradient(180deg, 
         var(--sidebar-background) 0%, 
@@ -15,7 +15,6 @@
     box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
     border-right: 1px solid rgba(248, 249, 250, 0.08);
     backdrop-filter: blur(10px);
-    z-index: 100;
 }
 
 .side-navigation::before {

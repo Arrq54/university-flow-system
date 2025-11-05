@@ -1,0 +1,57 @@
+import { useState, useEffect } from "react";
+import Cookies from "js-cookie";
+import { SERVER_URL } from "../config";
+
+export interface UserData {
+    id: string;
+    name: string;
+    email: string;
+    role: "STUDENT" | "TEACHER" | "ADMIN";
+}
+
+export function useUserData() {
+    const [user, setUser] = useState<UserData | null>();
+
+    const [loading, setLoading] = useState(!user);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        if (user) return;
+
+        const token = Cookies.get("token");
+        if (!token) {
+            setLoading(false);
+            return;
+        }
+
+        const fetchUser = async () => {
+            try {
+                setLoading(true);
+                const res = await fetch(`${SERVER_URL}/user/info`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!res.ok) throw new Error("Failed to fetch user data");
+
+                const data = await res.json();
+                setUser(data.user);
+            } catch (err: any) {
+                setError(err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUser();
+    }, [user]);
+
+    // 🔹 Funkcja do czyszczenia danych po wylogowaniu
+    const clearUser = () => {
+        setUser(null);
+        Cookies.remove("token");
+    };
+
+    return { user, setUser, clearUser, loading, error };
+}

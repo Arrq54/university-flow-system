@@ -4,6 +4,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import DashboardPage from "./pages/dashboard";
 import "./index.css";
 import HomePage from "./pages/homepage";
+import UserManagement from "./pages/userManagement";
 function App() {
     return (
         <div className="app-container">
@@ -19,6 +20,14 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <DashboardPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/manage-users"
+                    element={
+                        <ProtectedRoute>
+                            <UserManagement />
                         </ProtectedRoute>
                     }
                 />

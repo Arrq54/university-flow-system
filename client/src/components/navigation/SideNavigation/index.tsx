@@ -1,14 +1,118 @@
 import "./style.css";
 import SideNavigationItem from "./components/SideNavigationItem";
-export default function SideNavigation() {
-    return (
-        <div className="side-navigation">
-            <SideNavigationItem icon="speed-up-line.svg" label="Dashboard" active />
-            <SideNavigationItem icon="booklet-line.svg" label="Courses" />
-            <SideNavigationItem icon="calendar-2-line.svg" label="Calendar" />
-            <SideNavigationItem icon="graduation-cap-line.svg" label="Grades" />
-            <SideNavigationItem icon="mail-line.svg" label="Notifications" />
-            <SideNavigationItem icon="settings-4-line.svg" label="Settings" />
-        </div>
+
+interface IProps {
+    type: "STUDENT" | "TEACHER" | "ADMIN";
+    activeItem?: string;
+}
+export default function SideNavigation({ type, activeItem }: IProps) {
+    const navigationItems = [
+        <SideNavigationItem
+            icon="speed-up-line.svg"
+            label="Dashboard"
+            active={activeItem === "dashboard"}
+            url="/dashboard"
+        />,
+    ];
+    switch (type) {
+        case "STUDENT":
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="booklet-line.svg"
+                    label="Courses"
+                    active={activeItem === "courses"}
+                    url="/courses"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="calendar-2-line.svg"
+                    label="Calendar"
+                    active={activeItem === "calendar"}
+                    url="/calendar"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="graduation-cap-line.svg"
+                    label="Grades"
+                    active={activeItem === "grades"}
+                    url="/grades"
+                />
+            );
+            break;
+        case "TEACHER":
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="booklet-line.svg"
+                    label="Courses"
+                    active={activeItem === "courses"}
+                    url="/courses"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="calendar-2-line.svg"
+                    label="Calendar"
+                    active={activeItem === "calendar"}
+                    url="/calendar"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="graduation-cap-line.svg"
+                    label="Grades"
+                    active={activeItem === "grades"}
+                    url="/grades"
+                />
+            );
+            break;
+        case "ADMIN":
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="account-circle-line.svg"
+                    label="User Management"
+                    active={activeItem === "manage-users"}
+                    url="/manage-users"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="wrench-line.svg"
+                    label="Courses Management"
+                    active={activeItem === "manage-courses"}
+                    url="/manage-courses"
+                />
+            );
+            navigationItems.push(
+                <SideNavigationItem
+                    icon="calendar-schedule-line.svg"
+                    label="Schedule Management"
+                    active={activeItem === "manage-schedule"}
+                    url="/manage-schedule"
+                />
+            );
+
+            break;
+        default:
+            break;
+    }
+    navigationItems.push(
+        <SideNavigationItem
+            icon="mail-line.svg"
+            label="Notifications"
+            active={activeItem === "notifications"}
+            url="/notifications"
+        />
     );
+    navigationItems.push(
+        <SideNavigationItem
+            icon="settings-4-line.svg"
+            label="Settings"
+            active={activeItem === "settings"}
+            url="/settings"
+        />
+    );
+
+    return <div className="side-navigation">{navigationItems}</div>;
 }
