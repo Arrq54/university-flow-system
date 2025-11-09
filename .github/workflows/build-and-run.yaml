@@ -2,19 +2,13 @@ name: Build and Run Check (backend)
 
 on:
     push:
-        branches:
-            - "**"
+        branches: ["**"]
     pull_request:
-        branches:
-            - "**"
+        branches: ["**"]
 
 jobs:
     backend-build-and-run:
         runs-on: ubuntu-latest
-
-        defaults:
-            run:
-                working-directory: ./backend
 
         steps:
             - name: Checkout repository
@@ -26,14 +20,29 @@ jobs:
                   node-version: 20
 
             - name: Install dependencies
-              run: npm ci
+              run: |
+                  cd backend
+                  npm ci
 
             - name: Build TypeScript
               run: |
+                  cd backend
                   echo "Building TypeScript..."
                   npx tsc -p tsconfig.json
                   npx tsc-alias
 
             - name: Start server briefly to check it
               run: |
-                  echo "Starting serve
+                  cd backend
+                  echo "Starting server..."
+                  node dist/index.js &
+                  SERVER_PID=$!
+                  sleep 5
+                  if ps -p $SERVER_PID > /dev/null
+                  then
+                    echo "Server started successfully"
+                    kill $SERVER_PID
+                    exit 0
+                  else
+                    echo "Server failed to start."
+                    exit 1
