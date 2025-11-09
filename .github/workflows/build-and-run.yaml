@@ -1,4 +1,4 @@
-name: Build and Run Check
+name: Build and Run Check (backend)
 
 on:
     push:
@@ -9,22 +9,41 @@ on:
             - "**"
 
 jobs:
-    test-build-and-run:
+    backend-build-and-run:
         runs-on: ubuntu-latest
+
         defaults:
             run:
                 working-directory: backend
+
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
 
-            - name: Use Node
+            - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20"
+                  node-version: 20
 
             - name: Install dependencies
               run: npm ci
 
-            - name: Run your build-and-run-test script
-              run: npm run build-and-run-test
+            - name: Build TypeScript
+              run: npm run build
+
+            - name: Start server and check it
+              run: |
+                  echo "Starting server..."
+                  node dist/index.js &
+                  SERVER_PID=$!
+                  sleep 5
+                  # Check if process is running
+                  if ps -p $SERVER_PID > /dev/null
+                  then
+                    echo "Server started successfully, killing it now."
+                    kill $SERVER_PID
+                    exit 0
+                  else
+                    echo "Server failed to start."
+                    exit 1
+                  fi
