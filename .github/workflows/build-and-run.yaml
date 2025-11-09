@@ -17,7 +17,7 @@ jobs:
                 working-directory: backend
 
         steps:
-            - name: Checkout code
+            - name: Checkout repository
               uses: actions/checkout@v4
 
             - name: Use Node.js
@@ -29,21 +29,11 @@ jobs:
               run: npm ci
 
             - name: Build TypeScript
-              run: npm run build
-
-            - name: Start server and check it
               run: |
-                  echo "Starting server..."
-                  node dist/index.js &
-                  SERVER_PID=$!
-                  sleep 5
-                  # Check if process is running
-                  if ps -p $SERVER_PID > /dev/null
-                  then
-                    echo "Server started successfully, killing it now."
-                    kill $SERVER_PID
-                    exit 0
-                  else
-                    echo "Server failed to start."
-                    exit 1
-                  fi
+                  echo "Building TypeScript..."
+                  npx tsc -p tsconfig.json
+                  npx tsc-alias
+
+            - name: Start server briefly to check it
+              run: |
+                  echo "Starting serve
