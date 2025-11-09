@@ -7,6 +7,7 @@ export interface IUser extends Document {
     email: string;
     password: string;
     role: UserRoles;
+    title: string;
     matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
@@ -20,6 +21,7 @@ const userSchema = new Schema<IUser>(
             enum: Object.values(UserRoles),
             default: UserRoles.STUDENT,
         },
+        title: { type: String, default: "" },
     },
     { timestamps: true }
 );

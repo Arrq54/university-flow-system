@@ -6,4 +6,7 @@
     padding: 12px 16px;
     margin-left: 0;
     background-color: var(--sidebar-background);
+
+    color: var(--light-components-primary);
+    text-align: center;
 }

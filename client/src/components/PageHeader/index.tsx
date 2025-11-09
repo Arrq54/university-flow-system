@@ -1,5 +1,8 @@
 import React from "react";
 import "./style.css";
-export default function PageHeader() {
-    return <div className="page-header">PageHeader</div>;
+interface IProps {
+    title: string;
+}
+export default function PageHeader({ title }: IProps) {
+    return <div className="page-header">{title}</div>;
 }

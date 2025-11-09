@@ -22,11 +22,9 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
             req.user = await User.findById(decoded.id).select("-password");
             next();
         } catch (error) {
-            res.status(401).json({ message: "Not authorized, invalid token" });
+            return res.status(401).json({ message: "Not authorized, invalid token" });
         }
-    }
-
-    if (!token) {
-        res.status(401).json({ message: "Not authorized, no token" });
+    } else {
+        return res.status(401).json({ message: "Not authorized, no token" });
     }
 };

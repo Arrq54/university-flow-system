@@ -1,0 +1,193 @@
+/* Popup Background Overlay */
+.popup-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(4px);
+}
+
+/* Main Popup Container */
+.popup-container {
+    background-color: var(--light-components-primary);
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: popupSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Popup Header */
+.popup-header {
+    padding: 32px 32px 24px 32px;
+    text-align: center;
+}
+
+/* Popup Content */
+.popup-content {
+    padding: 24px 32px;
+}
+
+/* Inputs Container */
+.inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Individual Input Field */
+.input-field {
+    width: 100%;
+    display: flex;
+}
+
+.input-field .MuiTextField-root,
+.input-field .MuiFormControl-root {
+    width: 100%;
+}
+
+.input-field .MuiOutlinedInput-root,
+.input-field .MuiSelect-outlined {
+    border-radius: 8px;
+    background-color: rgba(248, 249, 250, 0.8);
+    transition: all 0.3s ease;
+}
+
+.input-field .MuiOutlinedInput-root:hover,
+.input-field .MuiSelect-outlined:hover {
+    background-color: rgba(248, 249, 250, 1);
+}
+
+.input-field .MuiOutlinedInput-root.Mui-focused,
+.input-field .MuiSelect-outlined.Mui-focused {
+    background-color: rgba(248, 249, 250, 1);
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.input-field .MuiInputLabel-root {
+    color: var(--dark-text-secondary);
+    font-weight: 500;
+}
+
+.input-field .MuiInputLabel-root.Mui-focused {
+    color: #1976d2;
+}
+
+/* Select Dropdown Styling */
+.input-field .MuiSelect-select {
+    padding: 16.5px 14px;
+}
+
+.input-field .MuiFormControl-root .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(0, 0, 0, 0.23);
+}
+
+.input-field .MuiFormControl-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: rgba(0, 0, 0, 0.87);
+}
+
+.input-field .MuiFormControl-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: #1976d2;
+    border-width: 2px;
+}
+
+/* Popup Actions */
+.popup-actions {
+    padding: 24px 32px 32px 32px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
+    background-color: rgba(248, 249, 250, 0.5);
+}
+
+/* Cancel Button */
+.cancel-button {
+    min-width: 120px;
+    height: 44px;
+    border-radius: 8px;
+    text-transform: none;
+    font-weight: 600;
+    border: 2px solid var(--dark-text-secondary);
+    color: var(--dark-text-secondary);
+    transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+    background-color: var(--dark-text-secondary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Save Button */
+.save-button {
+    min-width: 120px;
+    height: 44px;
+    border-radius: 8px;
+    text-transform: none;
+    font-weight: 600;
+    background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+    transition: all 0.3s ease;
+}
+
+.save-button:hover:not(:disabled) {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+}
+
+.save-button:disabled {
+    background: var(--dark-text-secondary);
+    opacity: 0.6;
+}
+
+/* Content Divider Styling */
+.popup-container .horizontal {
+    background-color: rgba(0, 0, 0, 0.08);
+    margin: 0;
+}
+
+/* Animation */
+@keyframes popupSlideIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .popup-container {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .popup-header,
+    .popup-content,
+    .popup-actions {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    
+    .popup-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-button,
+    .save-button {
+        width: 100%;
+    }
+}

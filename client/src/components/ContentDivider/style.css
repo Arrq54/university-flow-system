@@ -1,0 +1,15 @@
+.horizontal {
+    height: 1px;
+    min-height: 1px;
+    width: 100%;
+    background-color: var(--dark-text-secondary);
+}
+
+.vertical {
+    width: 1px;
+    min-width: 1px;
+    height: 100%;
+    background-color: var(--dark-text-secondary);
+}
+
+

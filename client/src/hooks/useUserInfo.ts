@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 import { SERVER_URL } from "../config";
+import { useGetToken } from "./useGetToken";
 
 export interface UserData {
     id: string;
@@ -18,7 +19,7 @@ export function useUserData() {
     useEffect(() => {
         if (user) return;
 
-        const token = Cookies.get("token");
+        const token = useGetToken();
         if (!token) {
             setLoading(false);
             return;
