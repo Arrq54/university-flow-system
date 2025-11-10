@@ -12,7 +12,7 @@ export const addUser = async (req: Request, res: Response) => {
     const { name, surname, email, password, title, role } = req.body as AddUserRequestBody;
 
     try {
-        await User.create({ name, surname, email, password, title, role });
+        await User.create({ name: name + " " + surname, surname, email, password, title, role });
         res.status(200).json({
             message: "User added successfully",
             data: { name: name + " " + surname, email, title, role },

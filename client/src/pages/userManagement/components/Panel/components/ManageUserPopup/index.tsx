@@ -4,15 +4,19 @@ import { Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
 import ContentDivider from "../../../../../../components/ContentDivider";
 import ContentHeader from "../../../../../../components/ContentHeader";
 import "./style.css";
-import { useAddUser } from "./hooks/useAddUser";
+import { useManageUser } from "../../hooks/useManageUser";
+import type { User } from "../../../../../../hooks/useUsersList";
 
 interface IProps {
     type: string;
+    popupType: string;
     onClose: () => void;
+    reloadPeople: () => void;
+    editedUser?: User;
 }
 
-export default function AddUserPopup({ type, onClose }: IProps) {
-    const { add, loading, error, success } = useAddUser();
+export default function ManageUserPopup({ type, popupType, onClose, reloadPeople, editedUser }: IProps) {
+    const { add, edit, loading, error, success } = useManageUser();
 
     const resetAndClose = () => {
         setName("");
@@ -21,10 +25,10 @@ export default function AddUserPopup({ type, onClose }: IProps) {
         onClose();
     };
 
-    const [name, setName] = useState("");
-    const [title, setTitle] = useState("");
-    const [surname, setSurname] = useState("");
-    const [email, setEmail] = useState("");
+    const [name, setName] = useState(editedUser ? editedUser.name.split(" ")[0] : "");
+    const [title, setTitle] = useState(editedUser ? editedUser.title : "");
+    const [surname, setSurname] = useState(editedUser ? editedUser.name.split(" ")[1] : "");
+    const [email, setEmail] = useState(editedUser ? editedUser.email : "");
     const [password, setPassword] = useState("");
     const [processing, setProcessing] = useState(false);
 
@@ -49,10 +53,22 @@ export default function AddUserPopup({ type, onClose }: IProps) {
 
     const handleSave = async () => {
         setProcessing(true);
+        if (popupType === "add") {
+            await add({ name, surname, email, password, title, role: type === "teachers" ? "TEACHER" : "STUDENT" });
+        } else {
+            await edit(editedUser!._id, {
+                name,
+                surname,
+                email,
+                title,
+                role: type === "teachers" ? "TEACHER" : "STUDENT",
+                password,
+            });
+        }
 
-        await add({ name, surname, email, password, title, role: type === "teachers" ? "TEACHER" : "STUDENT" });
         setProcessing(false);
         resetAndClose();
+        reloadPeople();
     };
 
     const handleCancel = () => {
@@ -67,7 +83,10 @@ export default function AddUserPopup({ type, onClose }: IProps) {
         <div className="popup-background">
             <div className="popup-container">
                 <div className="popup-header">
-                    <ContentHeader title={`Add New User (${type})`} size="large" />
+                    <ContentHeader
+                        title={popupType == "add" ? `Add New User (${type})` : `Edit User (${type})`}
+                        size="large"
+                    />
                 </div>
 
                 <ContentDivider type="line" orientation="horizontal" />
@@ -174,7 +193,7 @@ export default function AddUserPopup({ type, onClose }: IProps) {
                         color="primary"
                         startIcon={<SaveIcon />}
                         onClick={handleSave}
-                        disabled={processing || !name || !title || !surname || !email || !password}
+                        disabled={processing || !name || !surname || !email || !password}
                         className="save-button"
                     >
                         {processing ? "Saving..." : "Save"}
