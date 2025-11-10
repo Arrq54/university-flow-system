@@ -3,7 +3,6 @@ import "./style.css";
 import ContentHeader from "../../../../components/ContentHeader";
 import SearchBar from "../../../../components/SearchBar";
 import Controls from "./components/Controls";
-import AddUserPopup from "./components/AddUserPopup";
 import PeopleList from "./components/PeopleList";
 
 interface IProps {
@@ -11,8 +10,10 @@ interface IProps {
     icon: string;
     people: any[];
     addOnClick: () => void;
+    editOnClick: (user: any) => void;
+    reloadPeople: () => void;
 }
-export default function Panel({ type, icon, people, addOnClick }: IProps) {
+export default function Panel({ type, icon, people, addOnClick, editOnClick, reloadPeople }: IProps) {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredPeople, setFilteredPeople] = useState(people);
 
@@ -39,7 +40,7 @@ export default function Panel({ type, icon, people, addOnClick }: IProps) {
                         <div className="no-people-text">No {type} found.</div>
                     </div>
                 ) : (
-                    <PeopleList people={filteredPeople} />
+                    <PeopleList people={filteredPeople} reloadPeople={reloadPeople} editOnClick={editOnClick} />
                 )}
             </div>
             <div className="footer">

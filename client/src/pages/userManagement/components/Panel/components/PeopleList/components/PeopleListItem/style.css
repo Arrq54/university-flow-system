@@ -9,3 +9,14 @@
 .icon{
     transform: translateY(3px);
 }
+.items{
+    display: flex;
+    flex: 1;
+    justify-content: space-between;
+}
+.user-controls{
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    filter: var(--white-filter);
+}
