@@ -4,7 +4,6 @@ import { SERVER_URL } from "../../../../../config";
 
 interface AddUserRequestBody {
     name: string;
-    surname: string;
     email: string;
     password: string;
     title: string;

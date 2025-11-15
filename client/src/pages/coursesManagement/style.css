@@ -1,0 +1,24 @@
+.courses-search-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 20px 20px 0 20px;
+}
+
+.courses-search-container > div {
+    width: 100%;
+    max-width: 600px;
+}
+
+.courses-search-container input {
+    width: 100% !important;
+    font-size: 16px;
+}
+
+.courses-list{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}

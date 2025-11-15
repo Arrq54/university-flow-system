@@ -5,6 +5,8 @@ import DashboardPage from "./pages/dashboard";
 import "./index.css";
 import HomePage from "./pages/homepage";
 import UserManagement from "./pages/userManagement";
+import CoursesManagement from "./pages/coursesManagement";
+import ManageSelectedCourse from "./pages/coursesManagement/ManageSelectedCourse";
 function App() {
     return (
         <div className="app-container">
@@ -28,6 +30,22 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <UserManagement />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/manage-courses"
+                    element={
+                        <ProtectedRoute>
+                            <CoursesManagement />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/manage-courses/:courseCode"
+                    element={
+                        <ProtectedRoute>
+                            <ManageSelectedCourse />
                         </ProtectedRoute>
                     }
                 />

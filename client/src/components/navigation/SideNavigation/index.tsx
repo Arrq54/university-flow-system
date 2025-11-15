@@ -8,7 +8,7 @@ interface IProps {
 export default function SideNavigation({ type, activeItem }: IProps) {
     const navigationItems = [
         <SideNavigationItem
-            icon="speed-up-line.svg"
+            icon="/speed-up-line.svg"
             label="Dashboard"
             active={activeItem === "dashboard"}
             url="/dashboard"
@@ -18,7 +18,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
         case "STUDENT":
             navigationItems.push(
                 <SideNavigationItem
-                    icon="booklet-line.svg"
+                    icon="/booklet-line.svg"
                     label="Courses"
                     active={activeItem === "courses"}
                     url="/courses"
@@ -26,7 +26,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="calendar-2-line.svg"
+                    icon="/calendar-2-line.svg"
                     label="Calendar"
                     active={activeItem === "calendar"}
                     url="/calendar"
@@ -34,7 +34,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="graduation-cap-line.svg"
+                    icon="/graduation-cap-line.svg"
                     label="Grades"
                     active={activeItem === "grades"}
                     url="/grades"
@@ -44,7 +44,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
         case "TEACHER":
             navigationItems.push(
                 <SideNavigationItem
-                    icon="booklet-line.svg"
+                    icon="/booklet-line.svg"
                     label="Courses"
                     active={activeItem === "courses"}
                     url="/courses"
@@ -52,7 +52,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="calendar-2-line.svg"
+                    icon="/calendar-2-line.svg"
                     label="Calendar"
                     active={activeItem === "calendar"}
                     url="/calendar"
@@ -60,7 +60,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="graduation-cap-line.svg"
+                    icon="/graduation-cap-line.svg"
                     label="Grades"
                     active={activeItem === "grades"}
                     url="/grades"
@@ -70,7 +70,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
         case "ADMIN":
             navigationItems.push(
                 <SideNavigationItem
-                    icon="account-circle-line.svg"
+                    icon="/account-circle-line.svg"
                     label="User Management"
                     active={activeItem === "manage-users"}
                     url="/manage-users"
@@ -78,7 +78,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="wrench-line.svg"
+                    icon="/wrench-line.svg"
                     label="Courses Management"
                     active={activeItem === "manage-courses"}
                     url="/manage-courses"
@@ -86,7 +86,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
             );
             navigationItems.push(
                 <SideNavigationItem
-                    icon="calendar-schedule-line.svg"
+                    icon="/calendar-schedule-line.svg"
                     label="Schedule Management"
                     active={activeItem === "manage-schedule"}
                     url="/manage-schedule"
@@ -99,7 +99,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
     }
     navigationItems.push(
         <SideNavigationItem
-            icon="mail-line.svg"
+            icon="/mail-line.svg"
             label="Notifications"
             active={activeItem === "notifications"}
             url="/notifications"
@@ -107,7 +107,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
     );
     navigationItems.push(
         <SideNavigationItem
-            icon="settings-4-line.svg"
+            icon="/settings-4-line.svg"
             label="Settings"
             active={activeItem === "settings"}
             url="/settings"

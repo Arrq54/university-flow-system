@@ -1,0 +1,27 @@
+.course-list-item{
+    transition: all 0.3s ease;
+    padding: 14px 18px;
+    
+    border: 1px solid var(--light-components-primary);
+    color: var(--light-components-primary);
+
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background-color: var(--light-background-secondary);
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    cursor: pointer;
+}
+
+.course-icon{
+    width: 48px;
+    height: 48px;
+    margin-right: 16px;
+    filter: var(--white-filter);
+}
+
+.course-list-item:hover{
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-4px);
+}

@@ -10,3 +10,11 @@
     color: var(--light-components-primary);
     text-align: center;
 }
+.page-header-title{
+    width: 100%;
+}
+.page-header-go-back{
+    height: 38px;
+    filter: var(--white-filter);
+    cursor: pointer;
+}

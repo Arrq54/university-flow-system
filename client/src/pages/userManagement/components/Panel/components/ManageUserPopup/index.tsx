@@ -21,13 +21,11 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
     const resetAndClose = () => {
         setName("");
         setTitle("");
-        setSurname("");
         onClose();
     };
 
-    const [name, setName] = useState(editedUser ? editedUser.name.split(" ")[0] : "");
+    const [name, setName] = useState(editedUser ? editedUser.name : "");
     const [title, setTitle] = useState(editedUser ? editedUser.title : "");
-    const [surname, setSurname] = useState(editedUser ? editedUser.name.split(" ")[1] : "");
     const [email, setEmail] = useState(editedUser ? editedUser.email : "");
     const [password, setPassword] = useState("");
     const [processing, setProcessing] = useState(false);
@@ -54,11 +52,10 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
     const handleSave = async () => {
         setProcessing(true);
         if (popupType === "add") {
-            await add({ name, surname, email, password, title, role: type === "teachers" ? "TEACHER" : "STUDENT" });
+            await add({ name, email, password, title, role: type === "teachers" ? "TEACHER" : "STUDENT" });
         } else {
             await edit(editedUser!._id, {
                 name,
-                surname,
                 email,
                 title,
                 role: type === "teachers" ? "TEACHER" : "STUDENT",
@@ -74,7 +71,6 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
     const handleCancel = () => {
         setName("");
         setTitle("");
-        setSurname("");
 
         onClose();
     };
@@ -105,17 +101,6 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
                             />
                         </div>
 
-                        <div className="input-field">
-                            <TextField
-                                label="Surname"
-                                type="text"
-                                variant="outlined"
-                                value={surname}
-                                fullWidth
-                                required
-                                onChange={(e) => setSurname(e.target.value)}
-                            />
-                        </div>
                         {type === "teachers" && (
                             <div className="input-field">
                                 <FormControl fullWidth required>
@@ -193,7 +178,7 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
                         color="primary"
                         startIcon={<SaveIcon />}
                         onClick={handleSave}
-                        disabled={processing || !name || !surname || !email || !password}
+                        disabled={processing || !name || !email || !password}
                         className="save-button"
                     >
                         {processing ? "Saving..." : "Save"}
