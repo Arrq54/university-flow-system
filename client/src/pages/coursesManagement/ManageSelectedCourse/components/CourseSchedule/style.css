@@ -1,0 +1,76 @@
+.course-schedule-section {
+    background-color: var(--light-components-primary);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-grid {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.schedule-card {
+    background: #FAFAFA;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+    min-width: 320px;
+}
+
+.schedule-weekday-bar {
+    height: 6px;
+    width: 100%;
+}
+
+.schedule-content {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.schedule-info {
+    flex: 1;
+}
+
+.schedule-weekday {
+    margin: 0 0 12px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--dark-text-primary);
+}
+
+.schedule-time {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.time-badge {
+    background-color: #E5E7EB;
+    color: var(--dark-text-primary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: monospace;
+}
+
+.time-separator {
+    color: var(--dark-text-secondary);
+    font-weight: 600;
+}
+
+.schedule-actions {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+
+

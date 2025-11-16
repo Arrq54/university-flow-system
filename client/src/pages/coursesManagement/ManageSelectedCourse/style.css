@@ -1,0 +1,36 @@
+.manage-course-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow-y: auto;
+}
+
+
+
+.course-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 0px 1px var(--light-components-primary);
+}
+
+.stat-card h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.stat-card .stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0;
+}
+

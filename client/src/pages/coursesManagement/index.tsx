@@ -59,7 +59,7 @@ export default function CoursesManagement() {
                             style={{ minWidth: 150 }}
                             endIcon={
                                 <img
-                                    src="add-line.svg"
+                                    src="/add-line.svg"
                                     alt=""
                                     style={{ width: 20, height: 20, filter: "var(--white-filter)" }}
                                 />

@@ -1,7 +1,7 @@
 .sign-in-page {
     display: flex;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 .sign-in-form{
     background-color: var(--light-components-primary);
