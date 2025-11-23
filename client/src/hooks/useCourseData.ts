@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../config";
+import type { User } from "./useUsersList";
 
 export interface Course {
     _id: string;
     courseName: string;
     courseCode: string;
     icon: string;
+    assignedStudents: User[];
+    assignedTeachers: User[];
+    classes: any[];
     createdAt: string;
     updatedAt: string;
 }

@@ -3,6 +3,8 @@ import "./style.css";
 
 export interface ScheduleItem {
     _id?: string;
+    className: string;
+    assignedTeacher: string;
     weekday: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
     startTime: string;
     endTime: string;
@@ -18,11 +20,12 @@ interface IProps {
 const weekdayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export default function CourseSchedule({ schedule, onAddSchedule, onEditSchedule, onDeleteSchedule }: IProps) {
-    const sortedSchedule = [...schedule].sort((a, b) => {
-        const dayDiff = weekdayOrder.indexOf(a.weekday) - weekdayOrder.indexOf(b.weekday);
-        if (dayDiff !== 0) return dayDiff;
-        return a.startTime.localeCompare(b.startTime);
-    });
+    const scheduleByDay = weekdayOrder.reduce((acc, day) => {
+        acc[day] = schedule
+            .filter((item) => item.weekday === day)
+            .sort((a, b) => a.startTime.localeCompare(b.startTime));
+        return acc;
+    }, {} as { [key: string]: ScheduleItem[] });
 
     const getWeekdayColor = (weekday: string) => {
         const colors: { [key: string]: string } = {
@@ -59,76 +62,45 @@ export default function CourseSchedule({ schedule, onAddSchedule, onEditSchedule
                 )}
             </div>
 
-            {sortedSchedule.length === 0 ? (
-                <div className="empty-state">
-                    <p>No schedule set for this course yet.</p>
-                    {onAddSchedule && (
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={onAddSchedule}
-                            endIcon={
-                                <img
-                                    src="/add-line.svg"
-                                    alt=""
-                                    style={{ width: 20, height: 20, filter: "var(--white-filter)" }}
-                                />
-                            }
-                        >
-                            Add
-                        </Button>
-                    )}
-                </div>
-            ) : (
-                <div className="schedule-grid">
-                    {sortedSchedule.map((item, index) => (
-                        <div key={item._id || index} className="schedule-card">
-                            <div
-                                className="schedule-weekday-bar"
-                                style={{ backgroundColor: getWeekdayColor(item.weekday) }}
-                            />
-                            <div className="schedule-content">
-                                <div className="schedule-info">
-                                    <h3 className="schedule-weekday">{item.weekday}</h3>
-                                    <div className="schedule-time">
-                                        <span className="time-badge">{item.startTime}</span>
-                                        <span className="time-separator">:</span>
-                                        <span className="time-badge">{item.endTime}</span>
+            <div className="calendar-grid">
+                {weekdayOrder.map((day) => (
+                    <div key={day} className="calendar-day-column">
+                        <div className="calendar-day-header" style={{ borderTopColor: getWeekdayColor(day) }}>
+                            {day}
+                        </div>
+                        <div className="calendar-day-content">
+                            {scheduleByDay[day].map((item, index) => (
+                                <div key={item._id || index} className="calendar-class-card">
+                                    <div className="class-time">
+                                        {item.startTime} - {item.endTime}
+                                    </div>
+                                    <div className="class-name">{item.className}</div>
+                                    <div className="class-actions">
+                                        {onEditSchedule && (
+                                            <IconButton size="small" onClick={() => onEditSchedule(item._id || "")}>
+                                                <img
+                                                    src="/pencil-line.svg"
+                                                    alt="Edit"
+                                                    style={{ width: 16, height: 16 }}
+                                                />
+                                            </IconButton>
+                                        )}
+                                        {onDeleteSchedule && (
+                                            <IconButton size="small" onClick={() => onDeleteSchedule(item._id || "")}>
+                                                <img
+                                                    src="/delete-bin-line.svg"
+                                                    alt="Delete"
+                                                    style={{ width: 16, height: 16 }}
+                                                />
+                                            </IconButton>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="schedule-actions">
-                                    {onEditSchedule && (
-                                        <IconButton
-                                            aria-label=""
-                                            onClick={() => onEditSchedule(item._id || "")}
-                                            className="edit-button"
-                                        >
-                                            <img
-                                                src="/pencil-line.svg"
-                                                alt="Edit Schedule"
-                                                style={{ width: 20, height: 20 }}
-                                            />
-                                        </IconButton>
-                                    )}
-                                    {onDeleteSchedule && (
-                                        <IconButton
-                                            aria-label=""
-                                            onClick={() => onDeleteSchedule(item._id || "")}
-                                            className="delete-button"
-                                        >
-                                            <img
-                                                src="/delete-bin-line.svg"
-                                                alt="Delete Schedule"
-                                                style={{ width: 20, height: 20 }}
-                                            />
-                                        </IconButton>
-                                    )}
-                                </div>
-                            </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            )}
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }

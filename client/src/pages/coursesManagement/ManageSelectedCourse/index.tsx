@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { data, useNavigate, useParams } from "react-router-dom";
 import SideNavigation from "../../../components/navigation/SideNavigation";
 import { useUserData } from "../../../hooks/useUserInfo";
 import LoadingPopup from "../../../components/LoadingPopup";
@@ -9,11 +9,17 @@ import { useGetToken } from "../../../hooks/useGetToken";
 import { useCourseData } from "../../../hooks/useCourseData";
 import AssignedStudents from "./components/AssignedStudents";
 import AssignedTeachers from "./components/AssignedTeachers";
+import AssignStudentsToCourse from "./components/AssignStudentsToCourse";
+import AssignTeachersToCourse from "./components/AssignTeachersToCourse";
+import AddCourseScheduleItemPopup from "./components/AddCourseScheduleItemPopup";
 import CourseSchedule from "./components/CourseSchedule";
 import CourseInfoCard from "./components/CourseInfoCard";
 import "./style.css";
 import type { User } from "../../../hooks/useUsersList";
 import type { ScheduleItem } from "./components/CourseSchedule";
+import { SERVER_URL } from "../../../config";
+import { Button } from "@mui/material";
+import ConfirmCourseRemovePopup from "./components/ConfirmCourseRemovePopup";
 
 export default function ManageSelectedCourse() {
     const { user, loading } = useUserData();
@@ -23,122 +29,124 @@ export default function ManageSelectedCourse() {
     const goBack = () => {
         navigate("/manage-courses");
     };
-    const { course, loading: loadingCourse } = useCourseData(token || "", courseCode || undefined);
+    const {
+        course,
+        loading: loadingCourse,
+        refetch: refetchCourseData,
+    } = useCourseData(token || "", courseCode || undefined);
+
+    const [students, setStudents] = useState<User[]>([]);
+    const [teachers, setTeachers] = useState<User[]>([]);
+    const [classes, setClasses] = useState<ScheduleItem[]>([]);
+    const [courseLoading, setCourseLoading] = useState(true);
+
+    const [showAssignStudentsPopup, setShowAssignStudentsPopup] = useState(false);
+    const [showAssignTeachersPopup, setShowAssignTeachersPopup] = useState(false);
+    const [showAddScheduleItemPopup, setShowAddScheduleItemPopup] = useState(false);
+    const [showConfirmCourseRemovePopup, setShowConfirmCourseRemovePopup] = useState(false);
 
     useEffect(() => {
-        console.log("Course data updated:", course);
+        if (!course) return;
+        setCourseLoading(false);
+        setStudents(course.assignedStudents || []);
+        setTeachers(course.assignedTeachers || []);
+        setClasses(course.classes || []);
     }, [course]);
 
-    const sampleStudents: User[] = [
-        // {
-        //     _id: "1",
-        //     name: "John Doe",
-        //     surname: "Doe",
-        //     email: "john.doe@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        // {
-        //     _id: "2",
-        //     name: "Jane Smith",
-        //     surname: "Smith",
-        //     email: "jane.smith@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        // {
-        //     _id: "3",
-        //     name: "Alice Johnson",
-        //     surname: "Johnson",
-        //     email: "alice.johnson@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        // {
-        //     _id: "4",
-        //     name: "Bob Williams",
-        //     surname: "Williams",
-        //     email: "bob.williams@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        // {
-        //     _id: "1",
-        //     name: "John Doe",
-        //     surname: "Doe",
-        //     email: "john.doe@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        // {
-        //     _id: "2",
-        //     name: "Jane Smith",
-        //     surname: "Smith",
-        //     email: "jane.smith@university.edu",
-        //     role: "STUDENT",
-        //     title: "",
-        // },
-        {
-            _id: "3",
-            name: "Alice Johnson",
-            surname: "Johnson",
-            email: "alice.johnson@university.edu",
-            role: "STUDENT",
-            title: "",
-        },
-        {
-            _id: "4",
-            name: "Bob Williams",
-            surname: "Williams",
-            email: "bob.williams@university.edu",
-            role: "STUDENT",
-            title: "",
-        },
-    ];
+    const handleAssignStudents = async (selectedIds: string[]) => {
+        await fetch(`${SERVER_URL}/course/assign-students`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ courseCode, studentIds: selectedIds }),
+        });
 
-    const sampleTeachers: User[] = [
-        {
-            _id: "t1",
-            name: "Robert Anderson",
-            surname: "Anderson",
-            email: "r.anderson@university.edu",
-            role: "TEACHER",
-            title: "Prof.",
-        },
-        {
-            _id: "t2",
-            name: "Sarah Miller",
-            surname: "Miller",
-            email: "s.miller@university.edu",
-            role: "TEACHER",
-            title: "Dr.",
-        },
-    ];
+        refetchCourseData();
 
-    const sampleSchedule: ScheduleItem[] = [
-        {
-            _id: "s1",
-            weekday: "Monday",
-            startTime: "10:00",
-            endTime: "11:30",
-        },
-        // {
-        //     _id: "s2",
-        //     weekday: "Wednesday",
-        //     startTime: "14:00",
-        //     endTime: "15:30",
-        // },
-        // {
-        //     _id: "s3",
-        //     weekday: "Friday",
-        //     startTime: "09:00",
-        //     endTime: "10:30",
-        // },
-    ];
+        setShowAssignStudentsPopup(false);
+    };
+
+    const handleAssignTeachers = async (selectedIds: string[]) => {
+        await fetch(`${SERVER_URL}/course/assign-teachers`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ courseCode, teacherIds: selectedIds }),
+        });
+
+        refetchCourseData();
+
+        setShowAssignTeachersPopup(false);
+    };
+
+    const handleAddScheduleItem = async (data: {
+        className: string;
+        assignedTeacher: string;
+        weekday: string;
+        startTime: string;
+        endTime: string;
+    }) => {
+        await fetch(`${SERVER_URL}/course/add-schedule-item`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+
+            body: JSON.stringify({ courseCode }),
+        });
+
+        refetchCourseData();
+
+        setShowAddScheduleItemPopup(false);
+    };
+
+    const handleRemoveCourse = async () => {
+        console.log("Removing course with code:", courseCode);
+        await fetch(`${SERVER_URL}/course/delete/${courseCode}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        navigate("/manage-courses");
+    };
 
     return (
         <>
-            {(loading || loadingCourse) && <LoadingPopup />}
+            {(loading || loadingCourse || courseLoading) && <LoadingPopup />}
+            {showAssignStudentsPopup && (
+                <AssignStudentsToCourse
+                    onClose={() => setShowAssignStudentsPopup(false)}
+                    onSave={handleAssignStudents}
+                    assignedStudents={students}
+                />
+            )}
+            {showAssignTeachersPopup && (
+                <AssignTeachersToCourse
+                    onClose={() => setShowAssignTeachersPopup(false)}
+                    onSave={handleAssignTeachers}
+                    assignedTeachers={teachers}
+                />
+            )}
+            {showAddScheduleItemPopup && (
+                <AddCourseScheduleItemPopup
+                    onClose={() => setShowAddScheduleItemPopup(false)}
+                    onSave={handleAddScheduleItem}
+                    assignedTeachers={teachers}
+                />
+            )}
+            {showConfirmCourseRemovePopup && (
+                <ConfirmCourseRemovePopup
+                    onClose={() => setShowConfirmCourseRemovePopup(false)}
+                    onConfirm={handleRemoveCourse}
+                />
+            )}
 
             <div className="page">
                 <SideNavigation type={user?.role || "STUDENT"} activeItem="manage-courses" />
@@ -149,6 +157,22 @@ export default function ManageSelectedCourse() {
                             course
                                 ? `Manage Course - ${course.courseName} (${course.courseCode})`
                                 : `Manage Course - ${courseCode}`
+                        }
+                        button={
+                            <Button
+                                variant="contained"
+                                style={{ minWidth: 200 }}
+                                endIcon={
+                                    <img
+                                        src="/delete-bin-line.svg"
+                                        alt=""
+                                        style={{ width: 20, height: 20, filter: "var(--white-filter)" }}
+                                    />
+                                }
+                                onClick={() => setShowConfirmCourseRemovePopup(true)}
+                            >
+                                Remove course
+                            </Button>
                         }
                     />
                     <div className="manage-course-container">
@@ -163,33 +187,33 @@ export default function ManageSelectedCourse() {
                         <div className="course-stats">
                             <div className="stat-card">
                                 <h3>Total Students</h3>
-                                <p className="stat-value">{sampleStudents.length}</p>
+                                <p className="stat-value">{students.length}</p>
                             </div>
                             <div className="stat-card">
                                 <h3>Total Teachers</h3>
-                                <p className="stat-value">{sampleTeachers.length}</p>
+                                <p className="stat-value">{teachers.length}</p>
                             </div>
                             <div className="stat-card">
                                 <h3>Classes per Week</h3>
-                                <p className="stat-value">{sampleSchedule.length}</p>
+                                <p className="stat-value">{classes.length}</p>
                             </div>
                         </div>
 
                         <AssignedStudents
-                            assignedStudents={sampleStudents}
-                            onAddStudent={() => console.log("Add student clicked")}
+                            assignedStudents={students}
+                            onAddStudent={() => setShowAssignStudentsPopup(true)}
                             onRemoveStudent={(id) => console.log("Remove student:", id)}
                         />
 
                         <AssignedTeachers
-                            assignedTeachers={sampleTeachers}
-                            onAddTeacher={() => console.log("Add teacher clicked")}
+                            assignedTeachers={teachers}
+                            onAddTeacher={() => setShowAssignTeachersPopup(true)}
                             onRemoveTeacher={(id) => console.log("Remove teacher:", id)}
                         />
 
                         <CourseSchedule
-                            schedule={sampleSchedule}
-                            onAddSchedule={() => console.log("Add schedule clicked")}
+                            schedule={classes}
+                            onAddSchedule={() => setShowAddScheduleItemPopup(true)}
                             onEditSchedule={(id) => console.log("Edit schedule:", id)}
                             onDeleteSchedule={(id) => console.log("Delete schedule:", id)}
                         />

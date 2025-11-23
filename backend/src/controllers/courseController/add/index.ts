@@ -28,6 +28,9 @@ export const addCourse = async (req: Request, res: Response) => {
             message: "Course added successfully",
             data: {
                 _id: course._id,
+                classes: [],
+                assignedStudents: [],
+                assignedTeachers: [],
                 courseName: course.courseName,
                 courseCode: course.courseCode,
                 icon: course.icon,

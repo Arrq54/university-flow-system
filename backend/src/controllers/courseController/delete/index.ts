@@ -3,16 +3,10 @@ import mongoose from "mongoose";
 import { Course } from "../../../models/Course";
 
 export const deleteCourse = async (req: Request, res: Response) => {
-    const { id } = req.params;
-
+    const { courseCode } = req.params;
+    console.log("Deleting course with code:", courseCode);
     try {
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
-            return res.status(400).json({ message: "Invalid course ID" });
-        }
-
-        // Find and delete course
-        const course = await Course.findByIdAndDelete(id);
+        const course = await Course.findOneAndDelete({ courseCode });
         if (!course) {
             return res.status(404).json({ message: "Course not found" });
         }
