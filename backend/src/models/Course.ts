@@ -7,11 +7,11 @@ export interface ISchedule {
     weekday: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
     startTime: string;
     endTime: string;
-}
 
-export interface ICourseClasses {
-    _id?: string;
-    schedule: ISchedule[];
+    grades: {
+        studentId: string;
+        grade: number;
+    }[];
 }
 
 export interface ICourse extends Document {
@@ -22,7 +22,7 @@ export interface ICourse extends Document {
     assignedStudents: string[];
     assignedTeachers: string[];
 
-    classes: ICourseClasses[];
+    classes: ISchedule[];
     createdAt: Date;
     updatedAt: Date;
 }

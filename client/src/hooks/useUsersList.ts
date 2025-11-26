@@ -4,7 +4,6 @@ import { SERVER_URL } from "../config";
 export interface User {
     _id: string;
     name: string;
-    surname: string;
     email: string;
     title: string;
     role: string;

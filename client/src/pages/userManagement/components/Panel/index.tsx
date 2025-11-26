@@ -33,7 +33,7 @@ export default function Panel({ type, icon, people, addOnClick, editOnClick, rel
                 <ContentHeader title={type === "teachers" ? "Teachers" : "Students"} size="medium" />
                 <SearchBar value={searchTerm} onChange={setSearchTerm} />
             </div>
-            <div className="content">
+            <div className="people-list-content">
                 {filteredPeople.length === 0 ? (
                     <div className="no-people">
                         <img src={icon} alt="" style={{ width: 60, height: 60, marginBottom: 20 }} />

@@ -97,7 +97,7 @@ export default function ManageSelectedCourse() {
                 Authorization: `Bearer ${token}`,
             },
 
-            body: JSON.stringify({ courseCode }),
+            body: JSON.stringify({ courseCode, ...data }),
         });
 
         refetchCourseData();
@@ -213,6 +213,7 @@ export default function ManageSelectedCourse() {
 
                         <CourseSchedule
                             schedule={classes}
+                            teachers={teachers}
                             onAddSchedule={() => setShowAddScheduleItemPopup(true)}
                             onEditSchedule={(id) => console.log("Edit schedule:", id)}
                             onDeleteSchedule={(id) => console.log("Delete schedule:", id)}

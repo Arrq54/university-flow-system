@@ -83,7 +83,7 @@ export default function AddCoursePopup({ onClose, onSuccess }: IProps) {
                                 value={courseCode}
                                 fullWidth
                                 required
-                                placeholder="e.g., CS-301"
+                                placeholder="e.g., CS-101"
                                 onChange={(e) => setCourseCode(e.target.value)}
                             />
                         </div>

@@ -1,5 +1,6 @@
 import { Button, IconButton } from "@mui/material";
 import "./style.css";
+import type { User } from "../../../../../hooks/useUsersList";
 
 export interface ScheduleItem {
     _id?: string;
@@ -12,6 +13,7 @@ export interface ScheduleItem {
 
 interface IProps {
     schedule: ScheduleItem[];
+    teachers: User[];
     onAddSchedule?: () => void;
     onEditSchedule?: (scheduleId: string) => void;
     onDeleteSchedule?: (scheduleId: string) => void;
@@ -19,7 +21,13 @@ interface IProps {
 
 const weekdayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-export default function CourseSchedule({ schedule, onAddSchedule, onEditSchedule, onDeleteSchedule }: IProps) {
+export default function CourseSchedule({
+    schedule,
+    teachers,
+    onAddSchedule,
+    onEditSchedule,
+    onDeleteSchedule,
+}: IProps) {
     const scheduleByDay = weekdayOrder.reduce((acc, day) => {
         acc[day] = schedule
             .filter((item) => item.weekday === day)
@@ -38,6 +46,12 @@ export default function CourseSchedule({ schedule, onAddSchedule, onEditSchedule
             Sunday: "#6B7280",
         };
         return colors[weekday] || "#6B7280";
+    };
+
+    const getTeacherNameById = (teacherId: string) => {
+        const teacher = teachers.find((t) => t._id === teacherId);
+        if (!teacher) return "";
+        return teacher?.name;
     };
 
     return (
@@ -75,16 +89,8 @@ export default function CourseSchedule({ schedule, onAddSchedule, onEditSchedule
                                         {item.startTime} - {item.endTime}
                                     </div>
                                     <div className="class-name">{item.className}</div>
+                                    <div className="class-teacher">{getTeacherNameById(item.assignedTeacher)}</div>
                                     <div className="class-actions">
-                                        {onEditSchedule && (
-                                            <IconButton size="small" onClick={() => onEditSchedule(item._id || "")}>
-                                                <img
-                                                    src="/pencil-line.svg"
-                                                    alt="Edit"
-                                                    style={{ width: 16, height: 16 }}
-                                                />
-                                            </IconButton>
-                                        )}
                                         {onDeleteSchedule && (
                                             <IconButton size="small" onClick={() => onDeleteSchedule(item._id || "")}>
                                                 <img

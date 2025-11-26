@@ -61,6 +61,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border-left: 3px solid var(--primary-color);
     transition: transform 0.2s;
+    position: relative;
 }
 
 
@@ -85,10 +86,18 @@
     gap: 4px;
     opacity: 0;
     transition: opacity 0.2s;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
 }
 
 .calendar-class-card:hover .class-actions {
     opacity: 1;
+    
 }
 
 
+.class-teacher{
+    color: gray;
+    font-size: 12px;
+}

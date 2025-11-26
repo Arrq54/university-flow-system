@@ -4,7 +4,7 @@ import { SERVER_URL } from "../config";
 import { useGetToken } from "./useGetToken";
 
 export interface UserData {
-    id: string;
+    _id: string;
     name: string;
     email: string;
     role: "STUDENT" | "TEACHER" | "ADMIN";

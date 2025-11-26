@@ -84,14 +84,6 @@ export default function SideNavigation({ type, activeItem }: IProps) {
                     url="/manage-courses"
                 />
             );
-            navigationItems.push(
-                <SideNavigationItem
-                    icon="/calendar-schedule-line.svg"
-                    label="Schedule Management"
-                    active={activeItem === "manage-schedule"}
-                    url="/manage-schedule"
-                />
-            );
 
             break;
         default:
