@@ -72,6 +72,14 @@ export default function TeacherDashboard() {
                     <p className="stat-value">{courses.reduce((acc, course) => acc + course.classes.length, 0)}</p>
                 </div>
             </div>
+            <div className="system-stats">
+                <div className="stat-card">
+                    <h3>Total Students in all courses</h3>
+                    <p className="stat-value">
+                        {courses.reduce((acc, course) => acc + course.assignedStudents.length, 0)}
+                    </p>
+                </div>
+            </div>
 
             <div className="system-stats">
                 <div className="stat-card">

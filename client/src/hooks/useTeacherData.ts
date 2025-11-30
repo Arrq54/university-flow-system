@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SERVER_URL } from "../config";
 import { useGetToken } from "./useGetToken";
 
@@ -9,6 +9,15 @@ export interface Schedule {
     weekday: "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
     startTime: string;
     endTime: string;
+    grades: {
+        studentId: string;
+        grade: number;
+        description?: string;
+    }[];
+    finalGrades: {
+        studentId: string;
+        grade: number;
+    }[];
 }
 
 export interface Course {
@@ -30,35 +39,39 @@ export const useTeacherData = (teacherId: string) => {
 
     const token = useGetToken();
 
-    useEffect(() => {
+    const fetchTeacherData = useCallback(async () => {
         if (!teacherId || !token) {
             setLoading(false);
             return;
         }
 
-        const fetchTeacherData = async () => {
-            try {
-                setLoading(true);
-                const response = await fetch(`${SERVER_URL}/teacher/get/${teacherId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                if (!response.ok) {
-                    throw new Error("Failed to fetch teacher data");
-                }
-
-                const data = await response.json();
-                setCourses(data.courses);
-            } catch (err: any) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
+        try {
+            setLoading(true);
+            const response = await fetch(`${SERVER_URL}/teacher/get/${teacherId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            if (!response.ok) {
+                throw new Error("Failed to fetch teacher data");
             }
-        };
 
-        fetchTeacherData();
+            const data = await response.json();
+            setCourses(data.courses);
+        } catch (err: any) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
     }, [teacherId, token]);
 
-    return { courses, loading, error };
+    useEffect(() => {
+        fetchTeacherData();
+    }, [fetchTeacherData]);
+
+    const refetch = () => {
+        fetchTeacherData();
+    };
+
+    return { courses, loading, error, refetch };
 };

@@ -7,6 +7,8 @@ import HomePage from "./pages/homepage";
 import UserManagement from "./pages/userManagement";
 import CoursesManagement from "./pages/coursesManagement";
 import ManageSelectedCourse from "./pages/coursesManagement/ManageSelectedCourse";
+import TeacherCalendar from "./pages/calendar";
+import TeacherGradeManagement from "./pages/TeacherGradeManagement";
 function App() {
     return (
         <div className="app-container">
@@ -50,9 +52,23 @@ function App() {
                     }
                 />
 
-                {/* Redirects and fallback */}
-                {/* <Route path="/" element={<Navigate to="/dashboard" />} />
-                <Route path="*" element={<NotFoundPage />} /> */}
+                {/* TEACHER */}
+                <Route
+                    path="/teacher/calendar"
+                    element={
+                        <ProtectedRoute>
+                            <TeacherCalendar />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/teacher/manage-grades"
+                    element={
+                        <ProtectedRoute>
+                            <TeacherGradeManagement />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </div>
     );

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { SERVER_URL } from "../config";
 import type { User } from "./useUsersList";
+import type { Schedule } from "./useTeacherData";
 
 export interface Course {
     _id: string;
@@ -9,7 +10,7 @@ export interface Course {
     icon: string;
     assignedStudents: User[];
     assignedTeachers: User[];
-    classes: any[];
+    classes: Schedule[];
     createdAt: string;
     updatedAt: string;
 }

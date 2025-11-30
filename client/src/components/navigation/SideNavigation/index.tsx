@@ -29,7 +29,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
                     icon="/calendar-2-line.svg"
                     label="Calendar"
                     active={activeItem === "calendar"}
-                    url="/calendar"
+                    url="/student/calendar"
                 />
             );
             navigationItems.push(
@@ -37,7 +37,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
                     icon="/graduation-cap-line.svg"
                     label="Grades"
                     active={activeItem === "grades"}
-                    url="/grades"
+                    url="/student/grades"
                 />
             );
             break;
@@ -55,7 +55,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
                     icon="/calendar-2-line.svg"
                     label="Calendar"
                     active={activeItem === "calendar"}
-                    url="/calendar"
+                    url="/teacher/calendar"
                 />
             );
             navigationItems.push(
@@ -63,7 +63,7 @@ export default function SideNavigation({ type, activeItem }: IProps) {
                     icon="/graduation-cap-line.svg"
                     label="Grades"
                     active={activeItem === "grades"}
-                    url="/grades"
+                    url="/teacher/manage-grades"
                 />
             );
             break;

@@ -1,0 +1,26 @@
+.student-grades-row{
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+}
+.final-grade{
+    font-weight: bold;
+    background-color: var(--primary-background);
+    padding: 5px;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.final-grade-container{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}

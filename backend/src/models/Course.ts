@@ -11,6 +11,11 @@ export interface ISchedule {
     grades: {
         studentId: string;
         grade: number;
+        description?: string;
+    }[];
+    finalGrades: {
+        studentId: string;
+        grade: number;
     }[];
 }
 
@@ -38,6 +43,19 @@ const scheduleSchema = new Schema<ISchedule>(
         },
         startTime: { type: String, required: true },
         endTime: { type: String, required: true },
+        grades: [
+            {
+                studentId: { type: String, required: true },
+                grade: { type: Number, required: true },
+                description: { type: String },
+            },
+        ],
+        finalGrades: [
+            {
+                studentId: { type: String, required: true },
+                grade: { type: Number, required: true },
+            },
+        ],
     },
     { _id: true }
 );

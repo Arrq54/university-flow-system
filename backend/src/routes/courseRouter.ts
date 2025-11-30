@@ -9,5 +9,6 @@ courseRouter.post("/add", courseController.addCourse);
 courseRouter.post("/assign-students", courseController.assignStudentsToCourse);
 courseRouter.post("/assign-teachers", courseController.assignTeachersToCourse);
 courseRouter.post("/add-schedule-item", courseController.addScheduleItem);
+courseRouter.post("/:courseId/class/:classId/final-grade", courseController.updateFinalGrade);
 courseRouter.put("/edit/:id", courseController.editCourse);
 courseRouter.delete("/delete/:courseCode", courseController.deleteCourse);

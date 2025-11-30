@@ -6,6 +6,7 @@ import { getCourseByCode } from "./getOne";
 import { assignStudentsToCourse } from "./assignedStudents";
 import { assignTeachersToCourse } from "./assignedTeachers";
 import { addScheduleItem } from "./addScheduleItem";
+import { updateFinalGrade } from "./updateFinalGrade";
 
 export default {
     addCourse,
@@ -16,4 +17,5 @@ export default {
     assignStudentsToCourse,
     assignTeachersToCourse,
     addScheduleItem,
+    updateFinalGrade,
 };
