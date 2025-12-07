@@ -18,11 +18,13 @@
         "@mui/material": "^7.3.4",
         "@mui/styled-engine-sc": "^7.3.3",
         "@tailwindcss/vite": "^4.1.16",
+        "file-saver": "^2.0.5",
         "js-cookie": "^3.0.5",
         "react": "^19.1.1",
         "react-dom": "^19.1.1",
         "react-router-dom": "^7.9.5",
-        "styled-components": "^6.1.19"
+        "styled-components": "^6.1.19",
+        "xlsx": "^0.18.5"
     },
     "devDependencies": {
         "@eslint/js": "^9.36.0",

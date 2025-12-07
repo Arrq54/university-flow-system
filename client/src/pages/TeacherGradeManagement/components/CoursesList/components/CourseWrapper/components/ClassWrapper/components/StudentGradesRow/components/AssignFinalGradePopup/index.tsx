@@ -4,12 +4,13 @@ import { Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
 import ContentDivider from "../../../../../../../../../../../../components/ContentDivider";
 import ContentHeader from "../../../../../../../../../../../../components/ContentHeader";
 import "./style.css";
+import type { GradeInTable } from "../../../../../..";
 
 interface IProps {
     studentName: string;
     className: string;
     currentGrade: number | null;
-    studentGrades: number[];
+    studentGrades: GradeInTable[];
     onClose: () => void;
     onSave: (grade: number) => void;
 }
@@ -28,7 +29,7 @@ export default function AssignFinalGradePopup({
 
     const suggestedGrade = useMemo(() => {
         if (studentGrades.length === 0) return null;
-        const mean = studentGrades.reduce((sum, grade) => sum + grade, 0) / studentGrades.length;
+        const mean = studentGrades.reduce((sum, grade) => sum + grade.grade, 0) / studentGrades.length;
         return Math.round(mean * 10) / 10; // Round to 1 decimal place
     }, [studentGrades]);
 
@@ -57,7 +58,7 @@ export default function AssignFinalGradePopup({
                         Assign final grade to student: <strong>{studentName}</strong> in <strong>{className}</strong>
                     </p>
                     <p className="popup-suggested-grade">
-                        Suggested final grade:{" "}
+                        Suggested final grade:
                         <strong>{suggestedGrade !== null ? suggestedGrade.toFixed(1) : "N/A (no grades)"}</strong>
                     </p>
                     <div className="inputs-container">

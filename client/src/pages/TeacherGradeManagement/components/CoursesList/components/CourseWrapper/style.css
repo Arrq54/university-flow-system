@@ -8,15 +8,17 @@
     background-color: #f9f9f9;
 }
 .course-wrapper-header{
-    padding: 12px 16px;
+    padding: 10px 14px;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     cursor: pointer;
+    align-items: center;
 }
 .course-wrapper-icon{
     filter: black;
     display: flex;
+    align-items: center;
 }.course-wrapper-icon > img{
     width: 28px;
     height: 28px;
@@ -25,4 +27,8 @@
 .course-wraper-classes-in-course{
     width: 100%;
     border-top: 1px solid var(--primary-background);
+}
+.course-wrapper-icon
+{
+    gap: 10px;
 }

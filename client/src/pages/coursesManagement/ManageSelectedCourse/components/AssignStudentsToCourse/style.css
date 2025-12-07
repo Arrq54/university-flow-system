@@ -22,7 +22,6 @@
     border-radius: 16px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     overflow: hidden;
-    animation: popupSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
 }
@@ -86,15 +85,3 @@
     font-size: 0.85rem;
     color: var(--light-text-secondary);
 }
-
-/* Popup Actions */
-.popup-actions {
-    padding: 24px 32px;
-    display: flex;
-    justify-content: flex-end;
-    gap: 12px;
-    background-color: var(--light-components-primary);
-    border-top: 1px solid var(--light-border-color);
-}
-
-

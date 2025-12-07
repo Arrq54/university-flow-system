@@ -9,6 +9,7 @@ import CoursesManagement from "./pages/coursesManagement";
 import ManageSelectedCourse from "./pages/coursesManagement/ManageSelectedCourse";
 import TeacherCalendar from "./pages/calendar";
 import TeacherGradeManagement from "./pages/TeacherGradeManagement";
+import Messages from "./pages/messages";
 function App() {
     return (
         <div className="app-container">
@@ -66,6 +67,15 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <TeacherGradeManagement />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/messages"
+                    element={
+                        <ProtectedRoute>
+                            <Messages />
                         </ProtectedRoute>
                     }
                 />

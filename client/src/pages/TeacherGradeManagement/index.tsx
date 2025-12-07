@@ -39,7 +39,9 @@ export default function TeacherGradeManagement() {
             <SideNavigation type="TEACHER" activeItem="grades" />
             <PageContent>
                 <PageHeader title="Grade Management" />
-                {courses && <CoursesList courses={courses} onFinalGradeChange={handleFinalGradeChange} />}
+                {courses && (
+                    <CoursesList courses={courses} onFinalGradeChange={handleFinalGradeChange} onRefresh={refetch} />
+                )}
             </PageContent>
         </div>
     );

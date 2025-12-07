@@ -1,0 +1,16 @@
+.grades-row-header{
+    display: flex;
+    justify-content: flex-start;
+}
+
+.grades-row{
+    padding: 10px 14px;
+}
+.grade-entry{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 14px;
+}
+.grade-value{
+    font-weight: bold;
+}

@@ -69,7 +69,7 @@ export default function AddCourseScheduleItemPopup({ onClose, onSave, assignedTe
                         >
                             {assignedTeachers.map((teacher) => (
                                 <MenuItem key={teacher._id} value={teacher._id}>
-                                    {teacher.title} {teacher.name} {teacher.surname}
+                                    {teacher.title} {teacher.name}
                                 </MenuItem>
                             ))}
                         </Select>

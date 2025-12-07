@@ -5,19 +5,24 @@ import ClassWrapper from "./components/ClassWrapper";
 import { useGetToken } from "../../../../../../hooks/useGetToken";
 import { useUsersList } from "../../../../../../hooks/useUsersList";
 import { Button } from "@mui/material";
+import { exportCourseToExcel as exportToExcel } from "../../../../utils/exportToExcel";
 
 export interface StudentWithGrades {
     _id: string;
     name: string;
-    grades: number[];
+    grades: GradeInTable[];
     finalGrade: number | null;
 }
-
+export interface GradeInTable {
+    grade: number;
+    description?: string;
+}
 interface IProps {
     course: Course;
     onFinalGradeChange: (courseId: string, classId: string, studentId: string, grade: number) => void;
+    onRefresh: () => void;
 }
-export default function CourseWrapper({ course, onFinalGradeChange }: IProps) {
+export default function CourseWrapper({ course, onFinalGradeChange, onRefresh }: IProps) {
     const [isOpen, setIsOpen] = useState(false);
     const { users } = useUsersList(useGetToken() ?? "");
 
@@ -27,7 +32,10 @@ export default function CourseWrapper({ course, onFinalGradeChange }: IProps) {
 
     const getStudentsWithGrades = (classItem: Course["classes"][0]): StudentWithGrades[] => {
         return assignedStudents.map((student) => {
-            const grades = classItem.grades?.filter((g) => g.studentId === student._id).map((g) => g.grade) ?? [];
+            const grades =
+                classItem.grades
+                    ?.filter((g) => g.studentId === student._id)
+                    .map((g) => ({ grade: g.grade, description: g.description })) ?? [];
             const finalGradeEntry = classItem.finalGrades?.find((g) => g.studentId === student._id);
             return {
                 _id: student._id,
@@ -42,6 +50,9 @@ export default function CourseWrapper({ course, onFinalGradeChange }: IProps) {
         onFinalGradeChange(course._id, classId, studentId, grade);
     };
 
+    const exportCourseToExcel = () => {
+        exportToExcel(course, getStudentsWithGrades);
+    };
     return (
         <div className="course-wrapper">
             <div className="course-wrapper-header" onClick={() => setIsOpen(!isOpen)}>
@@ -49,6 +60,9 @@ export default function CourseWrapper({ course, onFinalGradeChange }: IProps) {
                 <div className="course-wrapper-icon">
                     <Button
                         variant="contained"
+                        onClick={() => {
+                            exportCourseToExcel();
+                        }}
                         startIcon={
                             <img
                                 src="/file-excel-2-line.svg"
@@ -68,9 +82,11 @@ export default function CourseWrapper({ course, onFinalGradeChange }: IProps) {
                     {course.classes.map((classItem) => (
                         <ClassWrapper
                             key={classItem._id}
+                            courseId={course._id}
                             classItem={classItem}
                             students={getStudentsWithGrades(classItem)}
                             onFinalGradeChange={handleFinalGradeChange}
+                            onRefresh={onRefresh}
                         />
                     ))}
                 </div>
