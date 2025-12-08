@@ -3,7 +3,6 @@ import { Button, CircularProgress } from "@mui/material";
 import { Cancel as CancelIcon, Delete as DeleteIcon } from "@mui/icons-material";
 import ContentDivider from "../../../../../components/ContentDivider";
 import ContentHeader from "../../../../../components/ContentHeader";
-import "./style.css";
 
 interface IProps {
     onClose: () => void;

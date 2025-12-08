@@ -6,7 +6,6 @@ import ContentHeader from "../../../../../components/ContentHeader";
 import { useUsersList } from "../../../../../hooks/useUsersList";
 import type { User } from "../../../../../hooks/useUsersList";
 import { useGetToken } from "../../../../../hooks/useGetToken";
-import "./style.css";
 
 interface IProps {
     onClose: () => void;

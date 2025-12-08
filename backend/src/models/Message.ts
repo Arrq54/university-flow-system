@@ -14,7 +14,6 @@ const messageSchema = new Schema<IMessage>(
         senderId: { type: String, required: true },
         content: { type: String, required: true },
         timestamp: { type: Date, default: Date.now },
-        readBy: { type: [String], default: [] },
     },
     { timestamps: true }
 );

@@ -5,7 +5,6 @@ import { Save as SaveIcon, Cancel as CancelIcon } from "@mui/icons-material";
 import ContentDivider from "../../../../../components/ContentDivider";
 import ContentHeader from "../../../../../components/ContentHeader";
 import type { User } from "../../../../../hooks/useUsersList";
-import "./style.css";
 
 interface IProps {
     onClose: () => void;
