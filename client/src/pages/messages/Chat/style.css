@@ -1,0 +1,25 @@
+.messages {
+    padding: 30px;
+    color: #ccc;
+    min-width: 500px;
+}
+.message {
+    display: flex;
+    margin-top: 15px;
+    flex-direction: column;
+}
+.message-header {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 12px;
+    display: flex;
+    gap: 10px;
+}
+
+.message-content {
+    background-color: #444;
+    padding: 10px 15px;
+    border-radius: 10px;
+    word-wrap: break-word;
+    width: fit-content;
+}

@@ -3,14 +3,17 @@ import SideNavigation from "../../components/navigation/SideNavigation";
 import { useUserData } from "../../hooks/useUserInfo";
 import PageContent from "../../components/PageContent";
 import PageHeader from "../../components/PageHeader";
-import ChatSelection from "../homepage/components/ChatSelection";
+import ChatSelection from "./ChatSelection";
 import { Button } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import NewMessagePopup from "./components/NewMessagePopup";
+import Chat from "./Chat";
 
 export default function Messages() {
     const { user } = useUserData();
     const [showNewMessagePopup, setShowNewMessagePopup] = useState(false);
+
+    const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
     return (
         <div>
@@ -28,7 +31,8 @@ export default function Messages() {
                         </Button>
                     }
                 />
-                <ChatSelection />
+                {!selectedChatId && <ChatSelection setSelectedChatId={setSelectedChatId} />}
+                {selectedChatId && <Chat chatId={selectedChatId} />}
             </PageContent>
             {showNewMessagePopup && <NewMessagePopup onClose={() => setShowNewMessagePopup(false)} />}
         </div>

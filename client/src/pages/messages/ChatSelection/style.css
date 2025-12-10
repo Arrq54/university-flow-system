@@ -1,0 +1,22 @@
+.chat-selection {
+    padding: 5px;
+}
+
+.chat{
+    padding: 12px;
+    box-shadow: 0 0px 1px var(--light-components-primary);
+    color: #ccc;
+    margin: 5px 0;
+    border-radius: 8px;
+    cursor  : pointer;
+    transition: 0.3s all ease;
+}
+.chat:hover{
+    box-shadow: 0 0px 2px var(--light-components-primary);
+    transition: 0.3s all ease;
+}
+.empty-state-chats{
+    text-align: center;
+    color: #888;
+    margin-top: 20px;
+}
