@@ -12,6 +12,7 @@ import Chat from "./Chat";
 export default function Messages() {
     const { user } = useUserData();
     const [showNewMessagePopup, setShowNewMessagePopup] = useState(false);
+    const [chatRefreshTrigger, setChatRefreshTrigger] = useState(0);
 
     const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
@@ -21,6 +22,8 @@ export default function Messages() {
             <PageContent>
                 <PageHeader
                     title="Messages"
+                    goBack={selectedChatId ? () => setSelectedChatId(null) : undefined}
+                    customStyle={selectedChatId ? { position: "fixed", width: "100%" } : undefined}
                     button={
                         <Button
                             variant="contained"
@@ -31,10 +34,17 @@ export default function Messages() {
                         </Button>
                     }
                 />
-                {!selectedChatId && <ChatSelection setSelectedChatId={setSelectedChatId} />}
+                {!selectedChatId && (
+                    <ChatSelection setSelectedChatId={setSelectedChatId} refreshTrigger={chatRefreshTrigger} />
+                )}
                 {selectedChatId && <Chat chatId={selectedChatId} />}
             </PageContent>
-            {showNewMessagePopup && <NewMessagePopup onClose={() => setShowNewMessagePopup(false)} />}
+            {showNewMessagePopup && (
+                <NewMessagePopup
+                    onClose={() => setShowNewMessagePopup(false)}
+                    onSuccess={() => setChatRefreshTrigger((prev) => prev + 1)}
+                />
+            )}
         </div>
     );
 }

@@ -48,7 +48,6 @@ export function useUserData() {
         fetchUser();
     }, [user]);
 
-    // 🔹 Funkcja do czyszczenia danych po wylogowaniu
     const clearUser = () => {
         setUser(null);
         Cookies.remove("token");

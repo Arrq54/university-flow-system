@@ -1,11 +1,21 @@
 import "./style.css";
 import SideNavigationItem from "./components/SideNavigationItem";
+import { IconButton, Tooltip } from "@mui/material";
+import { Logout as LogoutIcon } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useUserData } from "../../../hooks/useUserInfo";
 
 interface IProps {
     type: "STUDENT" | "TEACHER" | "ADMIN";
     activeItem?: string;
 }
 export default function SideNavigation({ type, activeItem }: IProps) {
+    const navigate = useNavigate();
+    const { clearUser } = useUserData();
+    const handleLogout = () => {
+        clearUser();
+        navigate("/signIn");
+    };
     const navigationItems = [
         <SideNavigationItem
             icon="/speed-up-line.svg"
@@ -84,14 +94,15 @@ export default function SideNavigation({ type, activeItem }: IProps) {
     navigationItems.push(
         <SideNavigationItem icon="/mail-line.svg" label="Messages" active={activeItem === "messages"} url="/messages" />
     );
-    navigationItems.push(
-        <SideNavigationItem
-            icon="/settings-4-line.svg"
-            label="Settings"
-            active={activeItem === "settings"}
-            url="/settings"
-        />
-    );
 
-    return <div className="side-navigation">{navigationItems}</div>;
+    return (
+        <div className="side-navigation">
+            <div>{navigationItems}</div>
+            <div className="logout-container">
+                <IconButton onClick={handleLogout} className="sign-out-button">
+                    <LogoutIcon />
+                </IconButton>
+            </div>
+        </div>
+    );
 }

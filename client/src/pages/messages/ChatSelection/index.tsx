@@ -1,14 +1,26 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useCallback } from "react";
 import "./style.css";
 import { useUserConversations } from "../hooks/useUserConversations";
 import { useGetToken } from "../../../hooks/useGetToken";
 import { useUserData } from "../../../hooks/useUserInfo";
 import { useUsersList } from "../../../hooks/useUsersList";
 
-export default function ChatSelection({ setSelectedChatId }: { setSelectedChatId?: (chatId: string) => void }) {
+export default function ChatSelection({
+    setSelectedChatId,
+    refreshTrigger,
+}: {
+    setSelectedChatId?: (chatId: string) => void;
+    refreshTrigger?: number;
+}) {
     const { user } = useUserData();
-    const { conversations } = useUserConversations(useGetToken() ?? null, user?._id || null);
+    const { conversations, refetch } = useUserConversations(useGetToken() ?? null, user?._id || null);
     const { users } = useUsersList(useGetToken() || null);
+
+    React.useEffect(() => {
+        if (refreshTrigger !== undefined && refreshTrigger > 0) {
+            refetch();
+        }
+    }, [refreshTrigger]);
 
     const userConversations = useMemo(() => {
         if (!conversations || !users || !user) return [];

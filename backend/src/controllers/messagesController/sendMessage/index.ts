@@ -5,24 +5,40 @@ import { Message } from "../../../models/Message";
 export const sendMessage = async (req: Request, res: Response) => {
     try {
         const { receiverIds, content } = req.body;
+        const { conversationId } = req.params;
         const senderId = (req as any).user._id;
 
-        if (!receiverIds || !Array.isArray(receiverIds) || receiverIds.length === 0 || !content) {
-            res.status(400).json({ message: "Invalid request data" });
+        if (!content) {
+            res.status(400).json({ message: "Content is required" });
             return;
         }
 
-        const memberIds = Array.from(new Set([senderId, ...receiverIds])).sort();
+        let conversation;
 
-        let conversation = await Conversation.findOne({
-            memberIds: {
-                $size: memberIds.length,
-                $all: memberIds,
-            },
-        });
+        if (conversationId) {
+            conversation = await Conversation.findById(conversationId);
+            if (!conversation) {
+                res.status(404).json({ message: "Conversation not found" });
+                return;
+            }
+        } else {
+            if (!receiverIds || !Array.isArray(receiverIds) || receiverIds.length === 0) {
+                res.status(400).json({ message: "Invalid request data" });
+                return;
+            }
 
-        if (!conversation) {
-            conversation = await Conversation.create({ memberIds });
+            const memberIds = Array.from(new Set([senderId, ...receiverIds])).sort();
+
+            conversation = await Conversation.findOne({
+                memberIds: {
+                    $size: memberIds.length,
+                    $all: memberIds,
+                },
+            });
+
+            if (!conversation) {
+                conversation = await Conversation.create({ memberIds });
+            }
         }
 
         const message = await Message.create({

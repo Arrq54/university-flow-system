@@ -4,10 +4,11 @@ interface IProps {
     title: string;
     button?: React.ReactElement;
     goBack?: () => void;
+    customStyle?: React.CSSProperties;
 }
-export default function PageHeader({ title, button, goBack }: IProps) {
+export default function PageHeader({ title, button, goBack, customStyle }: IProps) {
     return (
-        <div className="page-header">
+        <div className="page-header" style={customStyle}>
             {goBack && (
                 <img src="/arrow-left-long-fill.svg" alt="Go Back" className="page-header-go-back" onClick={goBack} />
             )}

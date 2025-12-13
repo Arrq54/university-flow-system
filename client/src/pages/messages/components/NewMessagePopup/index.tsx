@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {
     Button,
-    Checkbox,
+    Radio,
     List,
     ListItem,
     ListItemButton,
@@ -20,30 +20,22 @@ import "./style.css";
 
 interface IProps {
     onClose: () => void;
+    onSuccess?: () => void;
 }
 
-export default function NewMessagePopup({ onClose }: IProps) {
+export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
     const token = useGetToken();
     const { users, loading: loadingUsers } = useUsersList(token || null);
-    const [selectedUserIds, setSelectedUserIds] = useState<string[]>([]);
+    const [selectedUserId, setSelectedUserId] = useState<string>("");
     const [message, setMessage] = useState("");
     const [sending, setSending] = useState(false);
 
     const handleToggle = (userId: string) => () => {
-        const currentIndex = selectedUserIds.indexOf(userId);
-        const newChecked = [...selectedUserIds];
-
-        if (currentIndex === -1) {
-            newChecked.push(userId);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setSelectedUserIds(newChecked);
+        setSelectedUserId(userId);
     };
 
     const handleSend = async () => {
-        if (!token) return;
+        if (!token || !selectedUserId) return;
         setSending(true);
         try {
             const res = await fetch(`${SERVER_URL}/messages/send`, {
@@ -53,12 +45,13 @@ export default function NewMessagePopup({ onClose }: IProps) {
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    receiverIds: selectedUserIds,
+                    receiverIds: [selectedUserId],
                     content: message,
                 }),
             });
 
             if (res.ok) {
+                onSuccess?.();
                 onClose();
             } else {
                 console.error("Failed to send message");
@@ -87,14 +80,14 @@ export default function NewMessagePopup({ onClose }: IProps) {
                             ) : (
                                 <List dense sx={{ width: "100%", bgcolor: "background.paper" }}>
                                     {users.map((user) => {
-                                        const labelId = `checkbox-list-label-${user._id}`;
+                                        const labelId = `radio-list-label-${user._id}`;
                                         return (
                                             <ListItem key={user._id} disablePadding>
                                                 <ListItemButton role={undefined} onClick={handleToggle(user._id)} dense>
                                                     <ListItemIcon>
-                                                        <Checkbox
+                                                        <Radio
                                                             edge="start"
-                                                            checked={selectedUserIds.indexOf(user._id) !== -1}
+                                                            checked={selectedUserId === user._id}
                                                             tabIndex={-1}
                                                             disableRipple
                                                             inputProps={{ "aria-labelledby": labelId }}
@@ -137,7 +130,7 @@ export default function NewMessagePopup({ onClose }: IProps) {
                             color="primary"
                             startIcon={<SendIcon />}
                             onClick={handleSend}
-                            disabled={sending || selectedUserIds.length === 0 || !message}
+                            disabled={sending || !selectedUserId || !message}
                         >
                             {sending ? "Sending..." : "Send"}
                         </Button>
