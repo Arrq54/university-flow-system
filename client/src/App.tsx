@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import SignIn from "./pages/signIn";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import DashboardPage from "./pages/dashboard";
@@ -7,9 +7,11 @@ import HomePage from "./pages/homepage";
 import UserManagement from "./pages/userManagement";
 import CoursesManagement from "./pages/coursesManagement";
 import ManageSelectedCourse from "./pages/coursesManagement/ManageSelectedCourse";
-import TeacherCalendar from "./pages/calendar";
+import TeacherCalendar from "./pages/techearCalendar";
 import TeacherGradeManagement from "./pages/TeacherGradeManagement";
 import Messages from "./pages/messages";
+import StudentCalendar from "./pages/studentCalendar";
+import StudentGradeManagement from "./pages/StudentGradeManagement";
 function App() {
     return (
         <div className="app-container">
@@ -67,6 +69,24 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <TeacherGradeManagement />
+                        </ProtectedRoute>
+                    }
+                />
+
+                {/* student */}
+                <Route
+                    path="/student/calendar"
+                    element={
+                        <ProtectedRoute>
+                            <StudentCalendar />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/student/grades"
+                    element={
+                        <ProtectedRoute>
+                            <StudentGradeManagement />
                         </ProtectedRoute>
                     }
                 />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useChatMessages } from "../hooks/useChatMessages";
 import { useGetToken } from "../../../hooks/useGetToken";
 import { useUsersList } from "../../../hooks/useUsersList";

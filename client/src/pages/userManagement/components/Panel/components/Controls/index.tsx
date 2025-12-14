@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React from "react";
+
 import "./style.css";
 interface IPProps {
     addOnClick: () => void;

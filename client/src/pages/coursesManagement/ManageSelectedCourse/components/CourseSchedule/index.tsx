@@ -21,13 +21,7 @@ interface IProps {
 
 const weekdayOrder = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
-export default function CourseSchedule({
-    schedule,
-    teachers,
-    onAddSchedule,
-    onEditSchedule,
-    onDeleteSchedule,
-}: IProps) {
+export default function CourseSchedule({ schedule, teachers, onAddSchedule, onDeleteSchedule }: IProps) {
     const scheduleByDay = weekdayOrder.reduce((acc, day) => {
         acc[day] = schedule
             .filter((item) => item.weekday === day)

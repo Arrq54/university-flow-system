@@ -1,7 +1,5 @@
 import "./style.css";
 
-import { useEffect, useState } from "react";
-
 interface IProps {
     type:
         | "line"

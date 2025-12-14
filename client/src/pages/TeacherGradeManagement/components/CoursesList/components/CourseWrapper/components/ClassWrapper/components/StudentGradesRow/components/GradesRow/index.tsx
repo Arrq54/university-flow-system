@@ -1,11 +1,10 @@
-import React from "react";
 import type { StudentWithGrades } from "../../../../../..";
-import { IconButton } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
 import "./style.css";
+
 interface IProps {
     student: StudentWithGrades;
 }
+
 export default function GradesRow({ student }: IProps) {
     return (
         <div className="grades-row">
@@ -16,6 +15,7 @@ export default function GradesRow({ student }: IProps) {
                     <span className="grade-value">{gradeEntry.grade}</span>
                 </div>
             ))}
+            {student.grades.length === 0 && <div className="no-grades-entry">No grades available</div>}
         </div>
     );
 }

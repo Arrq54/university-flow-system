@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from "react";
+import { useMemo, useEffect } from "react";
 import "./style.css";
 import { useUserConversations } from "../hooks/useUserConversations";
 import { useGetToken } from "../../../hooks/useGetToken";
@@ -16,7 +16,7 @@ export default function ChatSelection({
     const { conversations, refetch } = useUserConversations(useGetToken() ?? null, user?._id || null);
     const { users } = useUsersList(useGetToken() || null);
 
-    React.useEffect(() => {
+    useEffect(() => {
         if (refreshTrigger !== undefined && refreshTrigger > 0) {
             refetch();
         }

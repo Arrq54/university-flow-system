@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./style.css";
 import type { Schedule } from "../../../../../../../../hooks/useTeacherData";
 import type { StudentWithGrades } from "../../index";
 import StudentGradesRow from "./components/StudentGradesRow";

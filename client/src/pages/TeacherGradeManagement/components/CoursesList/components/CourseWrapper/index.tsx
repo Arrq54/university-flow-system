@@ -1,5 +1,4 @@
-import React, { useState, useMemo } from "react";
-import "./style.css";
+import { useState, useMemo } from "react";
 import type { Course } from "../../../../../../hooks/useTeacherData";
 import ClassWrapper from "./components/ClassWrapper";
 import { useGetToken } from "../../../../../../hooks/useGetToken";

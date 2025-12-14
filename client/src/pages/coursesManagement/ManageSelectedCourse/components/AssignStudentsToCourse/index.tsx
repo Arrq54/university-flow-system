@@ -106,9 +106,7 @@ export default function AssignStudentsToCourse({ onClose, onSave, assignedStuden
                                         color="primary"
                                     />
                                     <div className="student-info">
-                                        <div className="student-name">
-                                            {student.name} {student.surname}
-                                        </div>
+                                        <div className="student-name">{student.name}</div>
                                         <div className="student-email">{student.email}</div>
                                     </div>
                                 </div>

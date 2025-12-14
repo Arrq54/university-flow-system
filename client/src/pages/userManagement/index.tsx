@@ -5,14 +5,14 @@ import PageHeader from "../../components/PageHeader";
 import PageContent from "../../components/PageContent";
 import Panel from "./components/Panel";
 import "./style.css";
-import AddUserPopup from "./components/Panel/components/ManageUserPopup";
+
 import { useState } from "react";
 import { useUsersList, type User } from "../../hooks/useUsersList";
 import { useGetToken } from "../../hooks/useGetToken";
 import ManageUserPopup from "./components/Panel/components/ManageUserPopup";
 export default function UserManagement() {
     const token = useGetToken();
-    const { users, loading: loadingUsers, error, refetch } = useUsersList(token || null);
+    const { users, loading: loadingUsers, refetch } = useUsersList(token || null);
     const { user, loading } = useUserData();
     const [addUserType, setAddUserType] = useState("");
     const [editUser, setEditUser] = useState<undefined | User>();

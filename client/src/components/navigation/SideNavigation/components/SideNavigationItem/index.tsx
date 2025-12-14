@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./style.css";
 
-import React from "react";
 interface IProps {
     icon: string;
     label: string;

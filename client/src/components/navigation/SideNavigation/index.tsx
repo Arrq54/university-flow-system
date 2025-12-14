@@ -1,6 +1,6 @@
 import "./style.css";
 import SideNavigationItem from "./components/SideNavigationItem";
-import { IconButton, Tooltip } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { Logout as LogoutIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useUserData } from "../../../hooks/useUserInfo";
@@ -26,14 +26,6 @@ export default function SideNavigation({ type, activeItem }: IProps) {
     ];
     switch (type) {
         case "STUDENT":
-            navigationItems.push(
-                <SideNavigationItem
-                    icon="/booklet-line.svg"
-                    label="Courses"
-                    active={activeItem === "courses"}
-                    url="/courses"
-                />
-            );
             navigationItems.push(
                 <SideNavigationItem
                     icon="/calendar-2-line.svg"

@@ -1,4 +1,3 @@
-import React from "react";
 import { useTeacherData } from "../../../../hooks/useTeacherData";
 import { useUserData } from "../../../../hooks/useUserInfo";
 

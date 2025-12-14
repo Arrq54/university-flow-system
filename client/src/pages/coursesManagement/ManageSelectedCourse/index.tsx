@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { data, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SideNavigation from "../../../components/navigation/SideNavigation";
 import { useUserData } from "../../../hooks/useUserInfo";
 import LoadingPopup from "../../../components/LoadingPopup";

@@ -31,7 +31,7 @@ export default function CoursesManagement() {
     };
 
     const token = useGetToken();
-    const { courses, loading: loadingCourses, error, refetch } = useCoursesList(token || null);
+    const { courses, refetch } = useCoursesList(token || null);
 
     useEffect(() => {
         setFilteredCourses(

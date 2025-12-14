@@ -1,7 +1,6 @@
-import React from "react";
 import type { User } from "../../../../../../../../hooks/useUsersList";
 import "./style.css";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 
 interface IProps {
     person: User;

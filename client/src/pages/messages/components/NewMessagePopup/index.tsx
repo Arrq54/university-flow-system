@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Button,
     Radio,
@@ -13,6 +13,7 @@ import {
 import { Send as SendIcon, Cancel as CancelIcon } from "@mui/icons-material";
 import ContentDivider from "../../../../components/ContentDivider";
 import ContentHeader from "../../../../components/ContentHeader";
+import SearchBar from "../../../../components/SearchBar";
 import { useUsersList } from "../../../../hooks/useUsersList";
 import { useGetToken } from "../../../../hooks/useGetToken";
 import { SERVER_URL } from "../../../../config";
@@ -29,6 +30,19 @@ export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
     const [selectedUserId, setSelectedUserId] = useState<string>("");
     const [message, setMessage] = useState("");
     const [sending, setSending] = useState(false);
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+
+    useEffect(() => {
+        setFilteredUsers(
+            users.filter(
+                (user) =>
+                    user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    user.role.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+        );
+    }, [searchTerm, users]);
 
     const handleToggle = (userId: string) => () => {
         setSelectedUserId(userId);
@@ -74,12 +88,15 @@ export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
 
                 <div className="popup-content">
                     <div className="inputs-container">
+                        <div className="input-field">
+                            <SearchBar value={searchTerm} onChange={setSearchTerm} />
+                        </div>
                         <div className="input-field" style={{ maxHeight: "200px", overflowY: "auto" }}>
                             {loadingUsers ? (
                                 <CircularProgress />
                             ) : (
                                 <List dense sx={{ width: "100%", bgcolor: "background.paper" }}>
-                                    {users.map((user) => {
+                                    {filteredUsers.map((user) => {
                                         const labelId = `radio-list-label-${user._id}`;
                                         return (
                                             <ListItem key={user._id} disablePadding>

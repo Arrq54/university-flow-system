@@ -16,7 +16,7 @@ interface IProps {
 }
 
 export default function ManageUserPopup({ type, popupType, onClose, reloadPeople, editedUser }: IProps) {
-    const { add, edit, loading, error, success } = useManageUser();
+    const { add, edit } = useManageUser();
 
     const resetAndClose = () => {
         setName("");

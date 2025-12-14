@@ -108,7 +108,7 @@ export default function AssignTeachersToCourse({ onClose, onSave, assignedTeache
                                     />
                                     <div className="teacher-info">
                                         <div className="teacher-name">
-                                            {teacher.title} {teacher.name} {teacher.surname}
+                                            {teacher.title} {teacher.name}
                                         </div>
                                         <div className="teacher-email">{teacher.email}</div>
                                     </div>

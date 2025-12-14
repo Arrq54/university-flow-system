@@ -1,4 +1,3 @@
-import React from "react";
 import { useTeacherData } from "../../../../hooks/useTeacherData";
 import { useUserData } from "../../../../hooks/useUserInfo";
 import "./style.css";
@@ -36,7 +35,7 @@ const getClassPosition = (startTime: string, endTime: string): { top: number; he
 
 export default function Calendar() {
     const { user } = useUserData();
-    const { courses, loading, error } = useTeacherData(user?._id || "");
+    const { courses, loading } = useTeacherData(user?._id || "");
 
     const getClassesForDay = (day: string): ClassBlock[] => {
         const classes: ClassBlock[] = [];

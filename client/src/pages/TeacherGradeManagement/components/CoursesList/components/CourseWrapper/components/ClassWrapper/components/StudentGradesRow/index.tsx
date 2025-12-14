@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./style.css";
 import type { StudentWithGrades } from "../../../..";
 import AssignFinalGradePopup from "./components/AssignFinalGradePopup";
 import GradesRow from "./components/GradesRow";
