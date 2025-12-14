@@ -105,6 +105,38 @@ export default function ManageSelectedCourse() {
         setShowAddScheduleItemPopup(false);
     };
 
+    const handleRemoveStudent = async (studentId: string) => {
+        const updatedStudents = students.filter((s) => s._id !== studentId);
+        const studentIds = updatedStudents.map((s) => s._id);
+
+        await fetch(`${SERVER_URL}/course/assign-students`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ courseCode, studentIds }),
+        });
+
+        refetchCourseData();
+    };
+
+    const handleRemoveTeacher = async (teacherId: string) => {
+        const updatedTeachers = teachers.filter((t) => t._id !== teacherId);
+        const teacherIds = updatedTeachers.map((t) => t._id);
+
+        await fetch(`${SERVER_URL}/course/assign-teachers`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ courseCode, teacherIds }),
+        });
+
+        refetchCourseData();
+    };
+
     const handleRemoveCourse = async () => {
         console.log("Removing course with code:", courseCode);
         await fetch(`${SERVER_URL}/course/delete/${courseCode}`, {
@@ -202,13 +234,13 @@ export default function ManageSelectedCourse() {
                         <AssignedStudents
                             assignedStudents={students}
                             onAddStudent={() => setShowAssignStudentsPopup(true)}
-                            onRemoveStudent={(id) => console.log("Remove student:", id)}
+                            onRemoveStudent={handleRemoveStudent}
                         />
 
                         <AssignedTeachers
                             assignedTeachers={teachers}
                             onAddTeacher={() => setShowAssignTeachersPopup(true)}
-                            onRemoveTeacher={(id) => console.log("Remove teacher:", id)}
+                            onRemoveTeacher={handleRemoveTeacher}
                         />
 
                         <CourseSchedule

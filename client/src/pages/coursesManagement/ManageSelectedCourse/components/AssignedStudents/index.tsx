@@ -63,7 +63,13 @@ export default function AssignedStudents({ assignedStudents, onRemoveStudent, on
                             </div>
                             {onRemoveStudent && (
                                 <div className="remove-button-container">
-                                    <IconButton aria-label="" onClick={() => {}} className="remove-button">
+                                    <IconButton
+                                        aria-label=""
+                                        onClick={() => {
+                                            onRemoveStudent(student._id);
+                                        }}
+                                        className="remove-button"
+                                    >
                                         <img
                                             src="/delete-bin-line.svg"
                                             alt="Show Password"
