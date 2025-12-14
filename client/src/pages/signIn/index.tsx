@@ -16,7 +16,6 @@ export default function SignIn() {
     const navigate = useNavigate();
 
     const handleSignIn = async () => {
-        // Handle sign-in logic here
         setProcessing(true);
         try {
             const data = await signIn({ email, password });
@@ -30,8 +29,6 @@ export default function SignIn() {
             setError("Wrong credentials! Please try again.");
             setProcessing(false);
         }
-
-        // setProcessing(true);
     };
     return (
         <div className="sign-in-page">

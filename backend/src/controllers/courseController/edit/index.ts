@@ -13,18 +13,15 @@ export const editCourse = async (req: Request, res: Response) => {
     const { courseName, courseCode, icon } = req.body as UpdateCourseRequestBody;
 
     try {
-        // Validate ObjectId
         if (!mongoose.Types.ObjectId.isValid(id)) {
             return res.status(400).json({ message: "Invalid course ID" });
         }
 
-        // Find course
         const course = await Course.findById(id);
         if (!course) {
             return res.status(404).json({ message: "Course not found" });
         }
 
-        // Check if new course code already exists (if changing code)
         if (courseCode && courseCode !== course.courseCode) {
             const existingCourse = await Course.findOne({ courseCode });
             if (existingCourse) {
@@ -32,7 +29,6 @@ export const editCourse = async (req: Request, res: Response) => {
             }
         }
 
-        // Update fields
         if (courseName) course.courseName = courseName;
         if (courseCode) course.courseCode = courseCode;
         if (icon) course.icon = icon;

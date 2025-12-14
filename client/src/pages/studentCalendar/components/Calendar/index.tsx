@@ -15,7 +15,7 @@ interface ClassBlock {
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
 const START_HOUR = 7;
 const END_HOUR = 21;
-const HOUR_HEIGHT = 60; // pixels per hour
+const HOUR_HEIGHT = 60;
 
 const timeToMinutes = (time: string): number => {
     const [h, m] = time.split(":").map(Number);

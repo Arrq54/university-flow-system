@@ -11,13 +11,11 @@ export const addCourse = async (req: Request, res: Response) => {
     const { courseName, courseCode, icon } = req.body as AddCourseRequestBody;
 
     try {
-        // Check if course with this code already exists
         const courseExists = await Course.findOne({ courseCode });
         if (courseExists) {
             return res.status(400).json({ message: "Course with this code already exists" });
         }
 
-        // Create new course
         const course = await Course.create({
             courseName,
             courseCode,

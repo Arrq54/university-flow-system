@@ -22,7 +22,6 @@ export default function AssignTeachersToCourse({ onClose, onSave, assignedTeache
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-        // Initialize selected IDs from assignedTeachers
         const initialIds = new Set(assignedTeachers.map((t) => t._id));
         setSelectedIds(initialIds);
     }, [assignedTeachers]);

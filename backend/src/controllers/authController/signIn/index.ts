@@ -7,22 +7,18 @@ export const signIn = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     try {
-        // znajdź użytkownika po mailu
         const user = (await User.findOne({ email })) || null;
         if (!user) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
 
-        // sprawdź hasło
         const isMatch = await user.matchPassword(password);
         if (!isMatch) {
             return res.status(401).json({ message: "Invalid email or password" });
         }
 
-        // wygeneruj token JWT
         const token = generateToken((user._id as mongoose.Types.ObjectId).toString());
 
-        // odpowiedź
         res.status(200).json({
             _id: (user._id as mongoose.Types.ObjectId).toString(),
             name: user.name,

@@ -3,7 +3,6 @@ import { User } from "../../../../models/User";
 
 export const getAllUsers = async (req: Request, res: Response) => {
     try {
-        // const users = await User.find({ role: { $in: ["STUDENT", "TEACHER"] } });
         const users = await User.find({});
         const responseUsers = users.map((user) => ({
             _id: user._id,

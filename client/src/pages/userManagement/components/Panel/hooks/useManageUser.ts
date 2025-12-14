@@ -42,7 +42,7 @@ export function useManageUser() {
                 throw new Error(message || "Failed to add user");
             }
 
-            await res.json(); // Parse response but don't need to store it
+            await res.json();
             setSuccess(true);
         } catch (err: any) {
             setError(err.message || "Unknown error");
@@ -75,7 +75,7 @@ export function useManageUser() {
                 throw new Error(message || "Failed to add user");
             }
 
-            await res.json(); // Parse response but don't need to store it
+            await res.json();
             setSuccess(true);
         } catch (err: any) {
             setError(err.message || "Unknown error");

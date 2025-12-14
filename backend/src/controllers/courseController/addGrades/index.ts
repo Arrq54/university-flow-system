@@ -28,12 +28,10 @@ export const addGrades = async (req: Request, res: Response) => {
             return res.status(404).json({ message: "Class not found" });
         }
 
-        // Initialize grades array if it doesn't exist
         if (!classItem.grades) {
             classItem.grades = [];
         }
 
-        // Add each grade with description
         grades.forEach((gradeEntry: { studentId: string; grade: number | null }) => {
             if (gradeEntry.grade !== null && gradeEntry.grade !== undefined) {
                 classItem.grades.push({
@@ -44,7 +42,6 @@ export const addGrades = async (req: Request, res: Response) => {
             }
         });
 
-        // Mark the grades array as modified for Mongoose
         course.markModified("classes");
 
         await course.save();

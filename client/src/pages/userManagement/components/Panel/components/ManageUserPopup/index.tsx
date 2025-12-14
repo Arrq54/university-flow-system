@@ -30,7 +30,6 @@ export default function ManageUserPopup({ type, popupType, onClose, reloadPeople
     const [password, setPassword] = useState("");
     const [processing, setProcessing] = useState(false);
 
-    // Academic titles and degrees
     const academicTitles = [
         "Mr.",
         "Ms.",

@@ -21,7 +21,6 @@ export default function AssignStudentsToCourse({ onClose, onSave, assignedStuden
     const [saving, setSaving] = useState(false);
 
     useEffect(() => {
-        // Initialize selected IDs from assignedStudents
         const initialIds = new Set(assignedStudents.map((s) => s._id));
         setSelectedIds(initialIds);
     }, [assignedStudents]);
