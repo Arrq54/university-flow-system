@@ -31,3 +31,5 @@
 /client/*.sw?
 
 /client/.env
+
+.DS_Store
