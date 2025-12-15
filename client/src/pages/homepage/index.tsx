@@ -1,11 +1,13 @@
 import { Button } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style.css";
+import RoleCard from "./components/RoleCard";
 
 export default function HomePage() {
     const navigate = useNavigate();
     const [expandedFAQ, setExpandedFAQ] = useState<number | null>(null);
+    const [carouselIndex, setCarouselIndex] = useState(0);
 
     const features = [
         { title: "Course Management", description: "Easily manage and access all your courses in one place" },
@@ -13,6 +15,32 @@ export default function HomePage() {
         { title: "Messaging", description: "Direct communication between students and professors" },
         { title: "Calendar", description: "Synchronized scheduling for classes and deadlines" },
     ];
+
+    const roles = [
+        {
+            name: "Admin",
+            description: "Oversee university operations, manage user roles, and ensure smooth functioning.",
+            icon: "/admin-line.svg",
+        },
+        {
+            name: "Student",
+            description: "Access your courses, track your progress, and connect with professors.",
+            icon: "/graduation-cap-line.svg",
+        },
+        {
+            name: "Professor",
+            description: "Manage your classes and communicate with students",
+            icon: "/presentation-line.svg",
+        },
+    ];
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCarouselIndex((prev) => (prev + 1) % roles.length);
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, [roles.length]);
 
     const faqs = [
         {
@@ -43,25 +71,18 @@ export default function HomePage() {
             </div>
             <div className="homepage-roles">
                 <div className="homepage-center">
-                    Manage your academic journey with ease, whether you're a Student, Professor, or Admin.
+                    <h2>Explore Roles</h2>
                 </div>
                 <div className="homepage-roles-cards">
-                    <div className="homepage-roles-card">
-                        <img src="/admin-line.svg" alt="Student Role" className="homepage-roles-card-image" />
-                        <h2>Admin</h2>
-                        <p>Oversee university operations, manage user roles, and ensure smooth functioning.</p>
-                    </div>
-                    <div className="homepage-roles-card">
-                        <img src="/graduation-cap-line.svg" alt="Student Role" className="homepage-roles-card-image" />
-                        <h2>Student</h2>
-                        <p>Access your courses, track your progress, and connect with professors.</p>
-                    </div>
-                    <div className="homepage-roles-card">
-                        <img src="/presentation-line.svg" alt="Student Role" className="homepage-roles-card-image" />
-
-                        <h2>Professor</h2>
-                        <p>Manage your classes and communicate with students</p>
-                    </div>
+                    {roles.map((role, index) => {
+                        const relativeIndex = (index - carouselIndex + roles.length) % roles.length;
+                        const isCenter = relativeIndex === 1;
+                        return (
+                            <div key={index} className={`role-card-wrapper ${isCenter ? "center" : ""}`}>
+                                <RoleCard name={role.name} description={role.description} icon={role.icon} />
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
             <div className="homepage-features" id="features">
@@ -100,6 +121,17 @@ export default function HomePage() {
                 <h1>
                     To gain access at your university, please contact us at{" "}
                     <a href="mailto:support@ufs.com">support@ufs.com</a>
+                    <p style={{ marginTop: 12 }}>
+                        If your account is already set up, you can
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={() => navigate("/signIn")}
+                            style={{ margin: 5, padding: "5px 10px" }}
+                        >
+                            Login Here
+                        </Button>
+                    </p>
                 </h1>
             </div>
 

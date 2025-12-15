@@ -15,7 +15,6 @@ interface IProps {
     schedule: ScheduleItem[];
     teachers: User[];
     onAddSchedule?: () => void;
-    onEditSchedule?: (scheduleId: string) => void;
     onDeleteSchedule?: (scheduleId: string) => void;
 }
 
@@ -90,7 +89,7 @@ export default function CourseSchedule({ schedule, teachers, onAddSchedule, onDe
                                                 <img
                                                     src="/delete-bin-line.svg"
                                                     alt="Delete"
-                                                    style={{ width: 16, height: 16 }}
+                                                    style={{ width: 16, height: 16, filter: "var(--black-filter)" }}
                                                 />
                                             </IconButton>
                                         )}

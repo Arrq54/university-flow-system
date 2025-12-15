@@ -17,7 +17,7 @@ export default function Messages() {
     const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
 
     return (
-        <div>
+        <>
             <SideNavigation type={user?.role || "STUDENT"} activeItem="messages" />
             <PageContent>
                 <PageHeader
@@ -45,6 +45,6 @@ export default function Messages() {
                     onSuccess={() => setChatRefreshTrigger((prev) => prev + 1)}
                 />
             )}
-        </div>
+        </>
     );
 }

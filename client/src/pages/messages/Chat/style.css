@@ -55,3 +55,20 @@
     color: #333;
     border-radius: 8px;
 }
+
+@media (max-width: 768px) {
+    .messages {
+        padding: 16px;
+        padding-top: 60px;
+        min-width: unset;
+        padding-bottom: 100px;
+    }
+
+    .message-input {
+        position: fixed;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+    }
+}

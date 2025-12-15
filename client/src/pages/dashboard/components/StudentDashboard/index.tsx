@@ -83,6 +83,13 @@ export default function StudentDashboard() {
             <div>
                 <div className="system-stats">
                     <div className="stat-card">
+                        <h3>Next class:</h3>
+                        <p className="stat-value">{nextClass.class}</p>
+                        <p className="stat-second-value">{nextClass.course}</p>
+                    </div>
+                </div>
+                <div className="system-stats">
+                    <div className="stat-card">
                         <h3>You are assigned to: </h3>
                         <p className="stat-value">{studentCourses.courses.length} courses</p>
                     </div>
@@ -102,13 +109,6 @@ export default function StudentDashboard() {
                                 {calculateAverageGrade(user?._id || "", course.courseCode) ?? "N/A"}
                             </p>
                         ))}
-                    </div>
-                </div>
-                <div className="system-stats">
-                    <div className="stat-card">
-                        <h3>Next class:</h3>
-                        <p className="stat-value">{nextClass.class}</p>
-                        <p className="stat-second-value">{nextClass.course}</p>
                     </div>
                 </div>
             </div>

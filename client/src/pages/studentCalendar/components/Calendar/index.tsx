@@ -1,7 +1,6 @@
 import { useStudentData } from "../../../../hooks/useStudentData";
 import { useUserData } from "../../../../hooks/useUserInfo";
 import { useGetToken } from "../../../../hooks/useGetToken";
-import "./style.css";
 
 interface ClassBlock {
     className: string;

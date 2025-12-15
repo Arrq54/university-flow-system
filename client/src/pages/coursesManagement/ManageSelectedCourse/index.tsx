@@ -138,7 +138,6 @@ export default function ManageSelectedCourse() {
     };
 
     const handleRemoveCourse = async () => {
-        console.log("Removing course with code:", courseCode);
         await fetch(`${SERVER_URL}/course/delete/${courseCode}`, {
             method: "DELETE",
             headers: {
@@ -147,6 +146,19 @@ export default function ManageSelectedCourse() {
             },
         });
         navigate("/manage-courses");
+    };
+
+    const handleDeleteSchedule = async (scheduleId: string) => {
+        await fetch(`${SERVER_URL}/course/delete-schedule-item`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ courseCode, scheduleId }),
+        });
+
+        refetchCourseData();
     };
 
     return (
@@ -247,8 +259,7 @@ export default function ManageSelectedCourse() {
                             schedule={classes}
                             teachers={teachers}
                             onAddSchedule={() => setShowAddScheduleItemPopup(true)}
-                            onEditSchedule={(id) => console.log("Edit schedule:", id)}
-                            onDeleteSchedule={(id) => console.log("Delete schedule:", id)}
+                            onDeleteSchedule={handleDeleteSchedule}
                         />
                     </div>
                 </PageContent>

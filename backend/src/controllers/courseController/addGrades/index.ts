@@ -6,8 +6,6 @@ export const addGrades = async (req: Request, res: Response) => {
         const { courseId, classId } = req.params;
         const { description, grades } = req.body;
 
-        console.log("Received addGrades request:", { courseId, classId, description, grades });
-
         if (!courseId || !classId || !grades || !Array.isArray(grades)) {
             return res.status(400).json({
                 message: "courseId, classId, and grades array are required",

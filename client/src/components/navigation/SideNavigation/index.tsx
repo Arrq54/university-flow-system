@@ -1,9 +1,10 @@
 import "./style.css";
 import SideNavigationItem from "./components/SideNavigationItem";
-import { IconButton } from "@mui/material";
-import { Logout as LogoutIcon } from "@mui/icons-material";
+import { IconButton, Drawer } from "@mui/material";
+import { Logout as LogoutIcon, Menu as MenuIcon, Close as CloseIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { useUserData } from "../../../hooks/useUserInfo";
+import { useState, useEffect } from "react";
 
 interface IProps {
     type: "STUDENT" | "TEACHER" | "ADMIN";
@@ -12,9 +13,26 @@ interface IProps {
 export default function SideNavigation({ type, activeItem }: IProps) {
     const navigate = useNavigate();
     const { clearUser } = useUserData();
+    const [isMobile, setIsMobile] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+        checkMobile();
+        window.addEventListener("resize", checkMobile);
+        return () => window.removeEventListener("resize", checkMobile);
+    }, []);
+
     const handleLogout = () => {
         clearUser();
         navigate("/signIn");
+        setMenuOpen(false);
+    };
+
+    const handleMenuToggle = () => {
+        setMenuOpen(!menuOpen);
     };
     const navigationItems = [
         <SideNavigationItem
@@ -87,14 +105,48 @@ export default function SideNavigation({ type, activeItem }: IProps) {
         <SideNavigationItem icon="/mail-line.svg" label="Messages" active={activeItem === "messages"} url="/messages" />
     );
 
-    return (
-        <div className="side-navigation">
+    const navContent = (
+        <>
             <div>{navigationItems}</div>
             <div className="logout-container">
                 <IconButton onClick={handleLogout} className="sign-out-button">
                     <LogoutIcon />
                 </IconButton>
             </div>
-        </div>
+        </>
     );
+
+    if (isMobile) {
+        return (
+            <>
+                <div className="mobile-header">
+                    <IconButton onClick={handleMenuToggle} className="hamburger-button">
+                        <MenuIcon />
+                    </IconButton>
+                </div>
+                <Drawer
+                    anchor="left"
+                    open={menuOpen}
+                    onClose={() => setMenuOpen(false)}
+                    className="mobile-drawer"
+                    PaperProps={{
+                        sx: {
+                            width: "250px",
+                            background: "linear-gradient(180deg, #2e3440 0%, rgba(46, 52, 64, 0.95) 100%)",
+                            color: "white",
+                        },
+                    }}
+                >
+                    <div className="drawer-close-button">
+                        <IconButton onClick={() => setMenuOpen(false)}>
+                            <CloseIcon sx={{ color: "white" }} />
+                        </IconButton>
+                    </div>
+                    <div className="drawer-content">{navContent}</div>
+                </Drawer>
+            </>
+        );
+    }
+
+    return <div className="side-navigation">{navContent}</div>;
 }

@@ -60,7 +60,6 @@ export default function Calendar() {
     };
 
     const hours = Array.from({ length: END_HOUR - START_HOUR + 1 }, (_, i) => START_HOUR + i);
-    console.log(hours);
     if (loading) {
         return <div className="calendar-loading">Loading schedule...</div>;
     }

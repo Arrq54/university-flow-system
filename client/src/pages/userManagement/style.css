@@ -1,8 +1,15 @@
-.content{
+.content {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     gap: 24px;
     padding: 40px;
+}
 
+@media (max-width: 1168px) {
+    .content {
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+    }
 }

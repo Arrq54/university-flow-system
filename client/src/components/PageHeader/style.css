@@ -10,11 +10,24 @@
     color: var(--light-components-primary);
     text-align: center;
 }
-.page-header-title{
+.page-header-title {
     width: 100%;
 }
-.page-header-go-back{
+.page-header-go-back {
     height: 38px;
     filter: var(--white-filter);
     cursor: pointer;
+}
+@media (max-width: 768px) {
+    .page-header-title {
+        display: none;
+    }
+    .page-header {
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 8px;
+    }
+    .page-header-button {
+        margin: 12px;
+    }
 }

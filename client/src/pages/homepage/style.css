@@ -8,6 +8,7 @@
     align-items: center;
     padding-top: 30px;
     position: relative;
+    text-align: center;
 }
 
 .homepage-signin-button {
@@ -40,29 +41,37 @@
     justify-content: center;
     gap: 40px;
     flex-wrap: wrap;
+    perspective: 1000px;
+}
+
+.role-card-wrapper {
+    transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(0.8) translateX(0);
+    opacity: 0.6;
+}
+
+.role-card-wrapper.center {
+    transform: scale(1) translateX(0);
+    opacity: 1;
+    z-index: 10;
 }
 
 .homepage-center {
     display: flex;
     justify-content: center;
+    text-align: center;
 }
 
 .homepage-roles-card {
     padding: 24px;
     border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 4px var(--light-components-primary);
     width: 280px;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.2s all ease;
-}
-
-.homepage-roles-card:hover {
-    box-shadow: 0 0 4px var(--light-components-primary) inset;
-    transition: 0.2s all ease;
 }
 
 .homepage-roles-card-image {
@@ -80,7 +89,10 @@
     padding: 40px 20px;
     text-align: center;
 }
-
+.homepage-roles h2 {
+    font-size: 28px;
+    font-weight: bold;
+}
 .homepage-features h2 {
     font-size: 28px;
     font-weight: bold;

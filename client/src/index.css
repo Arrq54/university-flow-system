@@ -5,32 +5,35 @@
 @import "@fontsource/roboto/500.css";
 @import "@fontsource/roboto/700.css";
 
-:root{
+:root {
     --primary-background: #222831;
-    --dark-text-primary: #393E46;
-    --dark-text-secondary: #6B7280;
-    --light-components-primary: #F8F9FA;
+    --dark-text-primary: #393e46;
+    --dark-text-secondary: #6b7280;
+    --light-components-primary: #f8f9fa;
     --dark-components-primary: #121212;
-    --sidebar-background: #2E3440;
-    --error-red: #D32F2F;
-    --white-filter: brightness(0) saturate(100%) invert(96%) sepia(0%) saturate(355%) hue-rotate(170deg) brightness(103%) contrast(98%);
+    --sidebar-background: #2e3440;
+    --error-red: #d32f2f;
+    --white-filter: brightness(0) saturate(100%) invert(96%) sepia(0%) saturate(355%) hue-rotate(170deg)
+        brightness(103%) contrast(98%);
     --sidebar-width: 120px;
+    --black-filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7500%) hue-rotate(181deg)
+        brightness(103%) contrast(103%);
 }
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
 }
-.app-container  {
+.app-container {
     background-color: var(--primary-background);
     width: 100vw;
     min-height: 100vh;
 }
-.page{
+.page {
     background-color: var(--primary-background);
     width: 100vw;
     min-height: 100vh;
@@ -41,6 +44,7 @@ body {
     left: 0;
     width: 100vw;
     min-height: 100vh;
+    height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
@@ -78,4 +82,11 @@ body {
     gap: 12px;
     background-color: var(--light-components-primary);
     border-top: 1px solid var(--light-border-color);
+}
+@media (max-width: 768px) {
+    .popup-container {
+        width: 100%;
+        margin-top: 60px;
+        border-radius: 12px;
+    }
 }

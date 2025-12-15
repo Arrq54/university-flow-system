@@ -34,3 +34,10 @@
 .course-wrapper-icon {
     gap: 10px;
 }
+
+@media (max-width: 768px) {
+    .course-wrapper {
+        width: 100%;
+        min-width: unset;
+    }
+}

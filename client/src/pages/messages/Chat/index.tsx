@@ -19,14 +19,6 @@ export default function Chat({ chatId }: IProps) {
     const [sending, setSending] = useState(false);
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    };
-
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
-
     const getSenderName = (senderId: string) => {
         return users.find((user) => user._id === senderId)?.name || "Unknown";
     };
