@@ -14,21 +14,42 @@ Backend:
 - Node.js
 - Express.js
 - MongoDB
+- bcrpyt
 
 
 ## Setup and local run
+**Frontend**:
 ```bash
 cd client
 npm i
 npm run dev
-
 ```
+You will also need a .env file, example:
+```bash
+VITE_API=https"//localhost:3031
+```
+
+**Backend**
 ```bash
 cd backend
 npm i
 npm run dev
 ```
+You will also need a .env file, example:
+```bash
+PORT=3031
+MONGO_URI=mongodb://......
+JWT_SECRET=....
+FRONTEND_URL=http://localhost:5173
+```
 Application will run on localhost:5173 by default
+
+## Database structure
+This MongoDB database uses 4 collections:
+- users: all users information, admins, teachers and students
+- courses: course data: name, course code, assigned teachers, assigned students, classes that this course offers and grades for them
+- conversations: list of conversations between users
+- messages: each message is a document in this collection, that is connected to conversations
 
 ## What is it?
 This is a lightweight university management system designed to simplify administrative and academic tasks. It allows users to:
@@ -112,4 +133,5 @@ Below is a gallery of application screenshots.
 <p align="center" >
     <img src="assets/student-calendar.png" width="1000" />
 </p>
+
 
