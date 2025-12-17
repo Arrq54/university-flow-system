@@ -16,6 +16,9 @@ Backend:
 - MongoDB
 - bcrpyt
 
+## Postman docs
+[Here's a link to Postman documentation of the API](https://documenter.getpostman.com/view/47347148/2sB3dVNSp5)
+
 
 ## Setup and local run
 **Frontend**:
@@ -133,5 +136,6 @@ Below is a gallery of application screenshots.
 <p align="center" >
     <img src="assets/student-calendar.png" width="1000" />
 </p>
+
 
 
