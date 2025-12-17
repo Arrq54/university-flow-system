@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Course } from "../../../models/Course";
+import { UserRoles } from "../../../utils/UserRoles";
+import { AuthRequest } from "../../../types/AuthRequest";
 
-export interface ExtendedRequest extends Request {
+export interface ExtendedRequest extends AuthRequest {
     body: {
         courseCode: string;
         teacherIds: string[];
@@ -9,6 +11,10 @@ export interface ExtendedRequest extends Request {
 }
 
 export const assignTeachersToCourse = async (req: ExtendedRequest, res: Response) => {
+    if (!req.user || req.user.role !== UserRoles.ADMIN) {
+        return res.status(403).json({ message: "Access denied. Only admins can assign teachers." });
+    }
+
     try {
         const { courseCode, teacherIds } = req.body;
 

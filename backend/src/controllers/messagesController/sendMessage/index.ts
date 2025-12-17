@@ -4,8 +4,7 @@ import { Message } from "../../../models/Message";
 
 export const sendMessage = async (req: Request, res: Response) => {
     try {
-        const { receiverIds, content } = req.body;
-        const { conversationId } = req.params;
+        const { receiverIds, content, conversationId } = req.body;
         const senderId = (req as any).user._id;
 
         if (!content) {

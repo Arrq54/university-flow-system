@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
 import { Course } from "../../../models/Course";
-export const getTeacherData = async (req: Request, res: Response) => {
+import { AuthRequest } from "../../../types/AuthRequest";
+import { UserRoles } from "../../../utils/UserRoles";
+export const getTeacherData = async (req: AuthRequest, res: Response) => {
+    if (!req.user || req.user.role !== UserRoles.TEACHER) {
+        return res.status(403).json({ message: "Access denied. Only teacher can access this data" });
+    }
     const { id } = req.params;
     const courses = await getCoursesForTeacher(id);
     const filteredCourses = courses.map((course) => {

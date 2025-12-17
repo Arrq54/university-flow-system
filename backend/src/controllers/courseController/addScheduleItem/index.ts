@@ -1,7 +1,9 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Course } from "../../../models/Course";
+import { UserRoles } from "../../../utils/UserRoles";
+import { AuthRequest } from "../../../types/AuthRequest";
 
-export interface ExtendedRequest extends Request {
+export interface ExtendedRequest extends AuthRequest {
     body: {
         courseCode: string;
         className: string;
@@ -13,6 +15,10 @@ export interface ExtendedRequest extends Request {
 }
 
 export const addScheduleItem = async (req: ExtendedRequest, res: Response) => {
+    if (!req.user || req.user.role !== UserRoles.ADMIN) {
+        return res.status(403).json({ message: "Access denied. Only admins can add schedule items." });
+    }
+
     try {
         const { courseCode, className, assignedTeacher, weekday, startTime, endTime } = req.body;
 

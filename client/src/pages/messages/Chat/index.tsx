@@ -27,13 +27,14 @@ export default function Chat({ chatId }: IProps) {
         if (!token || !message.trim()) return;
         setSending(true);
         try {
-            const res = await fetch(`${SERVER_URL}/messages/${chatId}/message`, {
+            const res = await fetch(`${SERVER_URL}/messages/send`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({
+                    conversationId: chatId,
                     content: message,
                 }),
             });

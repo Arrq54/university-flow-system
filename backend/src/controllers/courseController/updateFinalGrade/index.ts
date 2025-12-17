@@ -1,16 +1,22 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Course } from "../../../models/Course";
+import { UserRoles } from "../../../utils/UserRoles";
+import { AuthRequest } from "../../../types/AuthRequest";
 
-export const updateFinalGrade = async (req: Request, res: Response) => {
+export const updateFinalGrade = async (req: AuthRequest, res: Response) => {
+    if (!req.user || req.user.role !== UserRoles.TEACHER) {
+        return res.status(403).json({ message: "Access denied. Only teachers can update final grades." });
+    }
+
     try {
-        const { courseId, classId } = req.params;
+        const { courseCode, classId } = req.params;
         const { studentId, grade } = req.body;
 
         if (!studentId || grade === undefined) {
             return res.status(400).json({ message: "studentId and grade are required" });
         }
 
-        const course = await Course.findById(courseId);
+        const course = await Course.findOne({ courseCode });
         if (!course) {
             return res.status(404).json({ message: "Course not found" });
         }

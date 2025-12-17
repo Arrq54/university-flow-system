@@ -1,5 +1,7 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { Course } from "../../../models/Course";
+import { UserRoles } from "../../../utils/UserRoles";
+import { AuthRequest } from "../../../types/AuthRequest";
 
 interface AddCourseRequestBody {
     courseName: string;
@@ -7,8 +9,12 @@ interface AddCourseRequestBody {
     icon: string;
 }
 
-export const addCourse = async (req: Request, res: Response) => {
+export const addCourse = async (req: AuthRequest, res: Response) => {
     const { courseName, courseCode, icon } = req.body as AddCourseRequestBody;
+
+    if (!req.user || req.user.role !== UserRoles.ADMIN) {
+        return res.status(403).json({ message: "Access denied. Only admins can add courses." });
+    }
 
     try {
         const courseExists = await Course.findOne({ courseCode });

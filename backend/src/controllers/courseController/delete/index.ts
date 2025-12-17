@@ -1,9 +1,16 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import mongoose from "mongoose";
 import { Course } from "../../../models/Course";
+import { UserRoles } from "../../../utils/UserRoles";
+import { AuthRequest } from "../../../types/AuthRequest";
 
-export const deleteCourse = async (req: Request, res: Response) => {
+export const deleteCourse = async (req: AuthRequest, res: Response) => {
     const { courseCode } = req.params;
+
+    if (!req.user || req.user.role !== UserRoles.ADMIN) {
+        return res.status(403).json({ message: "Access denied. Only admins can delete courses." });
+    }
+
     console.log("Deleting course with code:", courseCode);
     try {
         const course = await Course.findOneAndDelete({ courseCode });
