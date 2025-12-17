@@ -4,7 +4,11 @@ import { UserRoles } from "../../../utils/UserRoles";
 import { AuthRequest } from "../../../types/AuthRequest";
 
 export const updateFinalGrade = async (req: AuthRequest, res: Response) => {
+    console.log("Received request to update final grade");
+    console.log("Request params:", req.params);
+    console.log("Request body:", req.body);
     if (!req.user || req.user.role !== UserRoles.TEACHER) {
+        console.log("Unauthorized access attempt by user:", req.user);
         return res.status(403).json({ message: "Access denied. Only teachers can update final grades." });
     }
 

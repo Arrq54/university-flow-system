@@ -7,14 +7,14 @@ import { useGrades } from "../../../../../../hooks/useGrades";
 import { IconButton } from "@mui/material";
 
 interface IProps {
-    courseId: string;
+    courseCode: string;
     classItem: Schedule;
     students: StudentWithGrades[];
     onFinalGradeChange: (classId: string, studentId: string, grade: number) => void;
     onRefresh: () => void;
 }
 
-export default function ClassWrapper({ courseId, classItem, students, onFinalGradeChange, onRefresh }: IProps) {
+export default function ClassWrapper({ courseCode, classItem, students, onFinalGradeChange, onRefresh }: IProps) {
     const [isOpen, setIsOpen] = useState(false);
     const [showGradesPopup, setShowGradesPopup] = useState(false);
     const { addGrades } = useGrades();
@@ -36,7 +36,7 @@ export default function ClassWrapper({ courseId, classItem, students, onFinalGra
         grades: Array<{ studentId: string; grade: number | null }>;
     }) => {
         const success = await addGrades({
-            courseId,
+            courseId: courseCode,
             classId: classItem._id!,
             description: payload.description,
             grades: payload.grades,

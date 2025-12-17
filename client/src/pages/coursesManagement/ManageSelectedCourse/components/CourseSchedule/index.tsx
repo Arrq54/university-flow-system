@@ -42,6 +42,8 @@ export default function CourseSchedule({ schedule, teachers, onAddSchedule, onDe
     };
 
     const getTeacherNameById = (teacherId: string) => {
+        console.log(teachers);
+        console.log(teacherId);
         const teacher = teachers.find((t) => t._id === teacherId);
         if (!teacher) return "";
         return teacher?.name;

@@ -46,7 +46,7 @@ export default function CourseWrapper({ course, onFinalGradeChange, onRefresh }:
     };
 
     const handleFinalGradeChange = (classId: string, studentId: string, grade: number) => {
-        onFinalGradeChange(course._id, classId, studentId, grade);
+        onFinalGradeChange(course.courseCode, classId, studentId, grade);
     };
 
     const exportCourseToExcel = () => {
@@ -81,7 +81,7 @@ export default function CourseWrapper({ course, onFinalGradeChange, onRefresh }:
                     {course.classes.map((classItem) => (
                         <ClassWrapper
                             key={classItem._id}
-                            courseId={course._id}
+                            courseCode={course.courseCode}
                             classItem={classItem}
                             students={getStudentsWithGrades(classItem)}
                             onFinalGradeChange={handleFinalGradeChange}

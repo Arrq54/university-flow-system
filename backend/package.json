@@ -10,13 +10,15 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "serve": "node dist/index.js",
         "build-and-run": "npm run build && npm run serve",
-        "build-and-run-test": "npm run build && node dist/index.js & SERVER_PID=$! && sleep 5 && echo 'Server started successfully'"
+        "build-and-run-test": "npm run build && node dist/index.js & SERVER_PID=$! && sleep 5 && echo 'Server started successfully'",
+        "seed": "ts-node src/seed.ts"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "description": "",
     "dependencies": {
+        "@faker-js/faker": "^10.1.0",
         "bcrypt": "^6.0.0",
         "bcryptjs": "^3.0.2",
         "cors": "^2.8.5",
