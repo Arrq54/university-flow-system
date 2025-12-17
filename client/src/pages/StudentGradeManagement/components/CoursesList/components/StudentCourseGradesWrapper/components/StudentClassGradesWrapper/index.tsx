@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import "./style.css";
 import type { Schedule } from "../../../../../../../../hooks/useStudentData";
 import StudentGradeRowDisplay from "./components/StudentGradeRowDisplay";
+import { useUsersList } from "../../../../../../../../hooks/useUsersList";
+import { useGetToken } from "../../../../../../../../hooks/useGetToken";
 
 interface IProps {
     classItem: Schedule;
@@ -9,11 +11,19 @@ interface IProps {
 
 export default function StudentClassGradesWrapper({ classItem }: IProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const { users, loading } = useUsersList(useGetToken() || null);
+
+    const teacherName = useMemo(
+        () => users.find((user) => user._id === classItem.assignedTeacher)?.name,
+        [users, classItem.assignedTeacher]
+    );
 
     return (
         <div className="class-wrapper-in-grades">
             <div className="class-wrapper-header" onClick={() => setIsOpen(!isOpen)}>
-                <span>{classItem.className}</span>
+                <div>
+                    {classItem.className} -<span className="smaller-teacher-name"> {teacherName}</span>
+                </div>
                 <div className="flex class-wrapper-controls">
                     <div className="class-wrapper-header-icon">
                         {isOpen ? (

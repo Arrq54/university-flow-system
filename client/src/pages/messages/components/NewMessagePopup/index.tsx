@@ -28,10 +28,12 @@ export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
     const token = useGetToken();
     const { users, loading: loadingUsers } = useUsersList(token || null);
     const [selectedUserId, setSelectedUserId] = useState<string>("");
+    const [selectedUserName, setSelectedUserName] = useState<string>("");
     const [message, setMessage] = useState("");
     const [sending, setSending] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredUsers, setFilteredUsers] = useState<any[]>([]);
+    const [step, setStep] = useState<"selectUser" | "writeMessage">("selectUser");
 
     useEffect(() => {
         setFilteredUsers(
@@ -44,8 +46,15 @@ export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
         );
     }, [searchTerm, users]);
 
-    const handleToggle = (userId: string) => () => {
+    const handleToggle = (userId: string, userName: string) => () => {
         setSelectedUserId(userId);
+        setSelectedUserName(userName);
+        setStep("writeMessage");
+    };
+
+    const handleBackToSelection = () => {
+        setStep("selectUser");
+        setMessage("");
     };
 
     const handleSend = async () => {
@@ -81,76 +90,95 @@ export default function NewMessagePopup({ onClose, onSuccess }: IProps) {
         <div className="popup-background">
             <div className="popup-container">
                 <div className="popup-header">
-                    <ContentHeader title="New Message" size="large" />
+                    <ContentHeader
+                        title={step === "selectUser" ? "Select Recipient" : `Message to ${selectedUserName}`}
+                        size="large"
+                    />
                 </div>
 
                 <ContentDivider type="line" orientation="horizontal" />
 
                 <div className="popup-content">
-                    <div className="inputs-container">
-                        <div className="input-field">
-                            <SearchBar value={searchTerm} onChange={setSearchTerm} />
-                        </div>
-                        <div className="input-field" style={{ maxHeight: "200px", overflowY: "auto" }}>
-                            {loadingUsers ? (
-                                <CircularProgress />
-                            ) : (
-                                <List dense sx={{ width: "100%", bgcolor: "background.paper" }}>
-                                    {filteredUsers.map((user) => {
-                                        const labelId = `radio-list-label-${user._id}`;
-                                        return (
-                                            <ListItem key={user._id} disablePadding>
-                                                <ListItemButton role={undefined} onClick={handleToggle(user._id)} dense>
-                                                    <ListItemIcon>
-                                                        <Radio
-                                                            edge="start"
-                                                            checked={selectedUserId === user._id}
-                                                            tabIndex={-1}
-                                                            disableRipple
-                                                            inputProps={{ "aria-labelledby": labelId }}
+                    {step === "selectUser" ? (
+                        <div className="inputs-container">
+                            <div className="input-field">
+                                <SearchBar value={searchTerm} onChange={setSearchTerm} />
+                            </div>
+                            <div className="input-field" style={{ maxHeight: "300px", overflowY: "auto" }}>
+                                {loadingUsers ? (
+                                    <CircularProgress />
+                                ) : (
+                                    <List dense sx={{ width: "100%", bgcolor: "background.paper" }}>
+                                        {filteredUsers.map((user) => {
+                                            const labelId = `radio-list-label-${user._id}`;
+                                            return (
+                                                <ListItem key={user._id} disablePadding>
+                                                    <ListItemButton
+                                                        role={undefined}
+                                                        onClick={handleToggle(user._id, user.name)}
+                                                        dense
+                                                    >
+                                                        <ListItemIcon>
+                                                            <Radio
+                                                                edge="start"
+                                                                checked={false}
+                                                                tabIndex={-1}
+                                                                disableRipple
+                                                                inputProps={{ "aria-labelledby": labelId }}
+                                                            />
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                            id={labelId}
+                                                            primary={`${user.name} (${user.role})`}
+                                                            secondary={user.email}
                                                         />
-                                                    </ListItemIcon>
-                                                    <ListItemText
-                                                        id={labelId}
-                                                        primary={`${user.name} (${user.role})`}
-                                                        secondary={user.email}
-                                                    />
-                                                </ListItemButton>
-                                            </ListItem>
-                                        );
-                                    })}
-                                </List>
-                            )}
+                                                    </ListItemButton>
+                                                </ListItem>
+                                            );
+                                        })}
+                                    </List>
+                                )}
+                            </div>
                         </div>
-                        <div className="input-field">
-                            <TextField
-                                label="Message"
-                                multiline
-                                rows={4}
-                                variant="outlined"
-                                fullWidth
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                            />
+                    ) : (
+                        <div className="inputs-container">
+                            <div className="input-field">
+                                <TextField
+                                    label="Message"
+                                    multiline
+                                    rows={8}
+                                    variant="outlined"
+                                    fullWidth
+                                    value={message}
+                                    onChange={(e) => setMessage(e.target.value)}
+                                />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <div
                         className="popup-actions"
                         style={{ display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" }}
                     >
+                        {step === "writeMessage" && (
+                            <Button variant="outlined" color="inherit" onClick={handleBackToSelection}>
+                                Back
+                            </Button>
+                        )}
                         <Button variant="outlined" color="error" startIcon={<CancelIcon />} onClick={onClose}>
                             Cancel
                         </Button>
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            startIcon={<SendIcon />}
-                            onClick={handleSend}
-                            disabled={sending || !selectedUserId || !message}
-                        >
-                            {sending ? "Sending..." : "Send"}
-                        </Button>
+                        {step === "writeMessage" && (
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                startIcon={<SendIcon />}
+                                onClick={handleSend}
+                                disabled={sending || !message}
+                            >
+                                {sending ? "Sending..." : "Send"}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>
