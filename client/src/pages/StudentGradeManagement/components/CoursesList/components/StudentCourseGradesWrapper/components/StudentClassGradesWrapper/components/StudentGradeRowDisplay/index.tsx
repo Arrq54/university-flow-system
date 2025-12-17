@@ -10,7 +10,6 @@ interface IProps {
 export default function StudentGradeRowDisplay({ classItem }: IProps) {
     const [gradesWrapperOpen, setGradesWrapperOpen] = useState(false);
 
-    // Get final grade from the current schedule
     const finalGrade = classItem.finalGrades.length > 0 ? classItem.finalGrades[0].grade : null;
 
     return (
