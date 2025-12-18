@@ -11,7 +11,6 @@ export const deleteCourse = async (req: AuthRequest, res: Response) => {
         return res.status(403).json({ message: "Access denied. Only admins can delete courses." });
     }
 
-    console.log("Deleting course with code:", courseCode);
     try {
         const course = await Course.findOneAndDelete({ courseCode });
         if (!course) {
