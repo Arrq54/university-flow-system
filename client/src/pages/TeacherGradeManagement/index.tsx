@@ -6,17 +6,12 @@ import { useUserData } from "../../hooks/useUserInfo";
 import { useGetToken } from "../../hooks/useGetToken";
 import { SERVER_URL } from "../../config";
 
-import { useNavigate } from "react-router-dom";
 import CoursesList from "./components/CoursesList";
 
 export default function TeacherGradeManagement() {
     const { user } = useUserData();
     const { courses, refetch } = useTeacherData(user?._id || "");
     const token = useGetToken();
-    const navigate = useNavigate();
-    if (user?.role && user.role !== "TEACHER") {
-        navigate("/signIn");
-    }
 
     const handleFinalGradeChange = async (courseId: string, classId: string, studentId: string, grade: number) => {
         try {

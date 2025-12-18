@@ -12,16 +12,14 @@ import TeacherGradeManagement from "./pages/TeacherGradeManagement";
 import Messages from "./pages/messages";
 import StudentCalendar from "./pages/studentCalendar";
 import StudentGradeManagement from "./pages/StudentGradeManagement";
+
 function App() {
     return (
         <div className="app-container">
-            {/* <Navbar /> */}
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                {/* Public routes */}
                 <Route path="/signIn" element={<SignIn />} />
 
-                {/* {/* Protected routes */}
                 <Route
                     path="/dashboard"
                     element={
@@ -33,7 +31,7 @@ function App() {
                 <Route
                     path="/manage-users"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <UserManagement />
                         </ProtectedRoute>
                     }
@@ -41,7 +39,7 @@ function App() {
                 <Route
                     path="/manage-courses"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <CoursesManagement />
                         </ProtectedRoute>
                     }
@@ -49,17 +47,16 @@ function App() {
                 <Route
                     path="/manage-courses/:courseCode"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["ADMIN"]}>
                             <ManageSelectedCourse />
                         </ProtectedRoute>
                     }
                 />
 
-                {/* TEACHER */}
                 <Route
                     path="/teacher/calendar"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["TEACHER"]}>
                             <TeacherCalendar />
                         </ProtectedRoute>
                     }
@@ -67,17 +64,16 @@ function App() {
                 <Route
                     path="/teacher/manage-grades"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["TEACHER"]}>
                             <TeacherGradeManagement />
                         </ProtectedRoute>
                     }
                 />
 
-                {/* student */}
                 <Route
                     path="/student/calendar"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["STUDENT"]}>
                             <StudentCalendar />
                         </ProtectedRoute>
                     }
@@ -85,7 +81,7 @@ function App() {
                 <Route
                     path="/student/grades"
                     element={
-                        <ProtectedRoute>
+                        <ProtectedRoute allowedRoles={["STUDENT"]}>
                             <StudentGradeManagement />
                         </ProtectedRoute>
                     }
